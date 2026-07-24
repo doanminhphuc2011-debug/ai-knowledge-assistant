@@ -23,7 +23,7 @@ llm = ChatGroq(
 
 # 3. ROOT PROMPT / SYSTEM PROMPT (Persona Pattern)
 # Đây là nơi định hình "nhân cách" của bot: vai trò, tính cách,
-# giới hạn được phép trả lời. Đổi nội dung ở đây để đổi persona.
+# giới hạn được phép trả lời. Đổi nội dung ở đây để đổi DMP.
 SYSTEM_PROMPT = """Bạn là Ori, trợ lý bán thân thiện dữ của quán cà phê DMP.
 - Trả lời ngắn gọn, thân thiện, xưng "tôi" gọi khách là "bạn".
 - Chỉ tư vấn về menu, giá cả, khuyến mãi.
