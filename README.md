@@ -49,9 +49,16 @@ Future Stack:
 ```
 ai-knowledge-assistant/
 │
-├── chatbot.py
+├── chatbot.py          # Chatbot chính (RAG + Memory)
+|   rag.py              # Truy vấn (retrieve) từ Qdrant
+|   ingest.py           # Chunk dữ liệu + nạp vào Qdrant
+├── Data
+|     ├──  menu.json           # Dữ liệu món (dùng để ingest)
+|     ├──  menu.md             # Chỉ phần "Tùy chọn đường/đá/topping" được ingest
+|     ├──  faq.md              # FAQ (dùng để ingest)
+|     ├──  promotions.md       # Khuyến mãi/thành viên (dùng để ingest)
 ├── requirements.txt
-├── .env.example
+├── .env.example               # GROQ_API_KEY, QDRANT_URL, QDRANT_API_KEY
 ├── .gitignore
 └── README.md
 ```
@@ -105,9 +112,9 @@ python chatbot.py
 - [x] Prompt Engineering
 - [x] Context Management
 - [x] Basic Chatbot
-- [ ] RAG
-- [ ] Embedding
-- [ ] Vector Database
+- [x] RAG
+- [x] Embedding
+- [x] Vector Database
 - [ ] Citation
 - [ ] Multi-document Support
 - [ ] Tool Calling
