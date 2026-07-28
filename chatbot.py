@@ -75,14 +75,17 @@ def build_augmented_message(user_input: str, context: str) -> str:
 
 
 # 5. GỌI LLM (RAG + MEMORY)
-def chat(user_input: str) -> str:
+def ask(question: str) -> str:
+    """Hàm chính: nhận câu hỏi, trả về câu trả lời của chatbot.
+    Đây là entrypoint mà cả CLI lẫn evaluate.py đều dùng chung, để không
+    có 2 nơi implement logic RAG + generate khác nhau."""
     # a) RETRIEVE: lấy context liên quan nhất từ Qdrant
-    context = retrieve_context(user_input)
-    augmented_input = build_augmented_message(user_input, context)
+    context = retrieve_context(question)
+    augmented_input = build_augmented_message(question, context)
 
     # b) Lưu câu hỏi GỐC (không kèm context) vào lịch sử - để lịch sử gọn,
     # tránh phình to / lặp lại context nhiều lần qua các lượt chat.
-    conversation_history.append(HumanMessage(content=user_input))
+    conversation_history.append(HumanMessage(content=question))
     trim_history()
 
     # c) GENERATE: gửi cho LLM lịch sử hội thoại + câu hỏi hiện tại đã
@@ -96,6 +99,19 @@ def chat(user_input: str) -> str:
     return response.content
 
 
+def reset_history() -> None:
+    """Đưa lịch sử hội thoại về trạng thái ban đầu (chỉ còn system prompt).
+    Dùng khi bắt đầu phiên chat mới, hoặc khi evaluate.py cần chạy từng
+    câu hỏi ĐỘC LẬP mà không bị ảnh hưởng bởi các câu hỏi trước đó."""
+    global conversation_history
+    conversation_history = [SystemMessage(content=SYSTEM_PROMPT)]
+
+
+# Giữ tên hàm cũ để tương thích ngược - bất kỳ code nào đang gọi chat()
+# (thay vì ask()) vẫn chạy đúng như trước, không cần sửa gì thêm.
+chat = ask
+
+
 # 6. VÒNG LẶP CHAT (CLI)
 if __name__ == "__main__":
     print("☕ Ori - Trợ lý quán cà phê DMP")
@@ -106,5 +122,5 @@ if __name__ == "__main__":
             continue
         if user_input.lower() == "exit":
             break
-        answer = chat(user_input)
+        answer = ask(user_input)
         print(f"Ori: {answer}\n")

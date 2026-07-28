@@ -1,0 +1,102 @@
+[
+  {
+    "question": "Cà phê muối giá bao nhiêu?",
+    "expected_source": "menu_item",
+    "expected_keywords": ["Cà Phê Muối", "35,000", "43,000"]
+  },
+  {
+    "question": "Trà đào sả cam giá bao nhiêu tiền?",
+    "expected_source": "menu_item",
+    "expected_keywords": ["Trà Đào Sả Cam", "38,000", "46,000"]
+  },
+  {
+    "question": "Quán có bán trà sữa ô long nướng không?",
+    "expected_source": "menu_item",
+    "expected_keywords": ["Trà Sữa Ô Long Nướng"]
+  },
+  {
+    "question": "Bánh tiramisu giá bao nhiêu?",
+    "expected_source": "menu_item",
+    "expected_keywords": ["Tiramisu", "35,000"]
+  },
+  {
+    "question": "Đá xay Caramel Coffee Freeze size L giá bao nhiêu?",
+    "expected_source": "menu_item",
+    "expected_keywords": ["Caramel Coffee Freeze", "57,000"]
+  },
+  {
+    "question": "Bạc xỉu và cà phê sữa đá cái nào rẻ hơn?",
+    "expected_source": "menu_item",
+    "expected_keywords": ["Bạc Xỉu", "Cà Phê Sữa Đá"]
+  },
+  {
+    "question": "Tôi có thể chọn mức đường khi gọi món không?",
+    "expected_source": "menu_option",
+    "expected_keywords": ["đường", "0%", "50%"]
+  },
+  {
+    "question": "Thêm topping trân châu đen thì tính thêm bao nhiêu tiền?",
+    "expected_source": "menu_option",
+    "expected_keywords": ["Trân châu đen", "8.000"]
+  },
+  {
+    "question": "Quán đang có chương trình khuyến mãi gì không?",
+    "expected_source": "promotion",
+    "expected_keywords": ["khuyến mãi", "Happy Hour", "20%"]
+  },
+  {
+    "question": "Khung giờ vàng giảm giá áp dụng lúc mấy giờ?",
+    "expected_source": "promotion",
+    "expected_keywords": ["14:00", "16:30", "20%"]
+  },
+  {
+    "question": "Thứ 3 có ưu đãi gì cho trà sữa không?",
+    "expected_source": "promotion",
+    "expected_keywords": ["Thứ 3", "Mua 1 Tặng 1"]
+  },
+  {
+    "question": "Cách tích điểm thành viên của quán như thế nào?",
+    "expected_source": "promotion",
+    "expected_keywords": ["10.000 VNĐ", "1 Điểm"]
+  },
+  {
+    "question": "Hạng Kim Cương có những ưu đãi gì?",
+    "expected_source": "promotion",
+    "expected_keywords": ["Kim Cương", "15%"]
+  },
+  {
+    "question": "Quán mở cửa từ mấy giờ đến mấy giờ?",
+    "expected_source": "faq",
+    "expected_keywords": ["06:30", "22:30"]
+  },
+  {
+    "question": "Quán có chỗ đậu xe ô tô không?",
+    "expected_source": "faq",
+    "expected_keywords": ["bãi đỗ xe", "ô tô"]
+  },
+  {
+    "question": "Quán có phòng họp cho nhóm đông người không?",
+    "expected_source": "faq",
+    "expected_keywords": ["phòng họp", "Tầng 3"]
+  },
+  {
+    "question": "Quán có giao hàng tận nơi không?",
+    "expected_source": "faq",
+    "expected_keywords": ["Freeship", "GrabFood"]
+  },
+  {
+    "question": "Người ăn chay có thể đổi sang sữa hạt không?",
+    "expected_source": "faq",
+    "expected_keywords": ["Hạnh Nhân", "Đậu Nành"]
+  },
+  {
+    "question": "Quán có bán bia hoặc rượu không?",
+    "expected_source": "none",
+    "expected_keywords": ["không có thông tin", "hotline"]
+  },
+  {
+    "question": "Quán có giảm giá riêng cho sinh viên không?",
+    "expected_source": "none",
+    "expected_keywords": ["chưa có thông tin"]
+  }
+]

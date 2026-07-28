@@ -17,29 +17,43 @@ COLLECTION_NAME = "dmp_knowledge"
 # Phải TRÙNG với model dùng lúc ingest, nếu không vector sẽ không tương thích.
 EMBED_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 
-TOP_K = 7
+TOP_K = 5
 # Điểm similarity tối thiểu để 1 chunk được coi là "liên quan". Chunk có
 # điểm thấp hơn ngưỡng này sẽ bị loại để tránh nhồi context không liên quan
 # vào prompt (giảm nguy cơ model trả lời sai / bịa).
-SCORE_THRESHOLD = 0.2
+SCORE_THRESHOLD = 0.4
 
 _client = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY)
 _client.set_model(EMBED_MODEL)
 
 
-def retrieve_context(query: str, top_k: int = TOP_K) -> str:
-    """Tìm các đoạn văn liên quan nhất tới câu hỏi trong Qdrant.
-    Trả về chuỗi rỗng nếu không có gì đủ liên quan."""
+def retrieve(query: str, top_k: int = TOP_K) -> dict:
+    """Truy vấn Qdrant và trả về CẢ context đã format lẫn kết quả thô.
+
+    Trả về:
+        {
+            "context": str,   # các chunk đã qua score_threshold, ghép thành 1 chuỗi
+            "results": list,  # TOÀN BỘ top_k kết quả thô từ Qdrant (kể cả chunk
+                               # bị loại vì điểm thấp) - dùng để đo retrieval
+                               # metadata (vd. trong evaluate.py) mà không cần
+                               # query lại lần 2.
+        }
+    """
     results = _client.query(
         collection_name=COLLECTION_NAME,
         query_text=query,
         limit=top_k,
     )
     relevant = [r for r in results if r.score >= SCORE_THRESHOLD]
-    if not relevant:
-        return ""
+    context = "\n".join(f"- {r.document}" for r in relevant)
+    return {"context": context, "results": results}
 
-    return "\n".join(f"- {r.document}" for r in relevant)
+
+def retrieve_context(query: str, top_k: int = TOP_K) -> str:
+    """Giữ nguyên interface cũ để chatbot.py (và mọi code khác) không cần
+    sửa gì - chỉ là lớp mỏng gọi lại retrieve()."""
+    return retrieve(query, top_k)["context"]
+
 
 
 if __name__ == "__main__":
