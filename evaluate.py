@@ -30,20 +30,14 @@ REPORT_PATH = "evaluation_report.csv"
 # context liên quan trong knowledge base (câu hỏi ngoài phạm vi quán).
 NO_SOURCE = "none"
 
-
-# ---------------------------------------------------------------------------
 # 1. LOAD DỮ LIỆU TEST
-# ---------------------------------------------------------------------------
 
 def load_test_cases(path: str = TEST_CASES_PATH) -> list[dict]:
     """Đọc bộ câu hỏi đánh giá từ file JSON."""
     with open(path, encoding="utf-8") as f:
         return json.load(f)
 
-
-# ---------------------------------------------------------------------------
 # 2. CÁC HÀM ĐO / TÍNH METRIC CHO TỪNG CÂU HỎI
-# ---------------------------------------------------------------------------
 
 def get_retrieved_sources(results: list[Any]) -> list[str]:
     """Lấy field 'type' (menu_item / menu_option / faq / promotion) từ
@@ -139,11 +133,7 @@ def check_hallucination(retriever_correct: bool, answer_correct: bool, answer: s
         return False
     return not is_dont_know_response(answer)
 
-
-# ---------------------------------------------------------------------------
 # 3. VÒNG LẶP ĐÁNH GIÁ CHÍNH
-# ---------------------------------------------------------------------------
-
 def evaluate_single_case(case: dict) -> dict:
     """Chạy đánh giá cho 1 test case, trả về 1 dòng kết quả đầy đủ."""
     question = case["question"]
@@ -194,10 +184,7 @@ def run_evaluation() -> None:
     print_summary(eval_results)
 
 
-# ---------------------------------------------------------------------------
 # 4. OUTPUT: CSV + TERMINAL SUMMARY
-# ---------------------------------------------------------------------------
-
 def write_report(eval_results: list[dict], path: str = REPORT_PATH) -> None:
     """Ghi chi tiết từng câu hỏi ra CSV để review thủ công."""
     fieldnames = [
