@@ -1,12 +1,15 @@
 """
-Chatbot cơ bản - Python + LangChain + Groq
-Gồm: System Prompt (Persona Pattern) + Conversation Memory (có trim history)
+Chatbot RAG - Python + LangChain + Groq + Qdrant
+Gồm: System Prompt (Persona Pattern) + RAG (Retrieval-Augmented Generation)
++ Conversation Memory (có trim history)
 """
 
 import os
 from dotenv import load_dotenv
 from langchain_groq import ChatGroq
 from langchain_core.messages import HumanMessage, SystemMessage, AIMessage
+
+from rag import retrieve_context
 
 # 1. LOAD API KEY TỪ .env
 load_dotenv()
@@ -21,13 +24,30 @@ llm = ChatGroq(
     temperature=0.7,
 )
 
-# 3. ROOT PROMPT / SYSTEM PROMPT (Persona Pattern)
-# Đây là nơi định hình "nhân cách" của bot: vai trò, tính cách,
-# giới hạn được phép trả lời. Đổi nội dung ở đây để đổi DMP.
-SYSTEM_PROMPT = """Bạn là Ori, trợ lý bán thân thiện dữ của quán cà phê DMP.
-- Trả lời ngắn gọn, thân thiện, xưng "tôi" gọi khách là "bạn".
-- Chỉ tư vấn về menu, giá cả, khuyến mãi.
-- Nếu không biết thông tin, "thành thật nói không biết", không bịa đặt.
+# 3. ROOT PROMPT / SYSTEM PROMPT
+# Xác định vai trò (persona) của chatbot.
+# Mọi câu trả lời phải ưu tiên dựa trên context do RAG truy xuất.
+# Nếu context không đủ thông tin thì trả lời không biết, không suy đoán.
+SYSTEM_PROMPT = """Bạn là Ori, trợ lý bán hàng thân thiện của quán cà phê DMP.
+
+Nhiệm vụ:
+- Trả lời ngắn gọn, tự nhiên, thân thiện.
+- Xưng "tôi", gọi khách là "bạn".
+- Chỉ trả lời các câu hỏi liên quan đến quán, menu, giá, khuyến mãi, thông tin cửa hàng và dịch vụ.
+
+Quy tắc:
+- Mỗi câu hỏi sẽ đi kèm phần [THÔNG TIN THAM KHẢO].
+- Ưu tiên sử dụng thông tin trong [THÔNG TIN THAM KHẢO] để trả lời.
+- Có thể diễn đạt lại bằng lời văn tự nhiên, nhưng không được thay đổi ý nghĩa hoặc bịa thêm thông tin.
+- Nếu [THÔNG TIN THAM KHẢO] có đủ thông tin, hãy trả lời trực tiếp, không nói rằng "theo tài liệu" hay "theo thông tin tham khảo".
+- Nếu [THÔNG TIN THAM KHẢO] không có hoặc không đủ thông tin để trả lời, hãy nói rõ rằng bạn không có thông tin và gợi ý khách liên hệ hotline hoặc nhân viên của quán.
+- Không suy đoán, không tự tạo thông tin ngoài dữ liệu được cung cấp.
+- Nếu khách hỏi về một chương trình khuyến mãi cụ thể (ví dụ: sinh viên, học sinh, sinh nhật, GrabFood...)
+  nhưng trong [THÔNG TIN THAM KHẢO] không có chương trình đó,
+  hãy nói rằng hiện tại chưa có thông tin về chương trình đó.
+
+- Nếu [THÔNG TIN THAM KHẢO] có các chương trình khuyến mãi khác,
+  hãy giới thiệu những chương trình đang áp dụng thay vì chỉ trả lời "không biết".
 """
 
 # 4. CONVERSATION MEMORY
@@ -47,16 +67,30 @@ def trim_history() -> None:
     conversation_history = [system_msg] + recent
 
 
-# 5. GỌI LLM
+def build_augmented_message(user_input: str, context: str) -> str:
+    """Ghép câu hỏi user với context RAG lấy được từ Qdrant."""
+    if context:
+        return f"{user_input}\n\n[THÔNG TIN THAM KHẢO]\n{context}"
+    return f"{user_input}\n\n[THÔNG TIN THAM KHẢO]\n(không tìm thấy thông tin liên quan trong dữ liệu quán)"
+
+
+# 5. GỌI LLM (RAG + MEMORY)
 def chat(user_input: str) -> str:
-    # Thêm câu hỏi user vào memory
+    # a) RETRIEVE: lấy context liên quan nhất từ Qdrant
+    context = retrieve_context(user_input)
+    augmented_input = build_augmented_message(user_input, context)
+
+    # b) Lưu câu hỏi GỐC (không kèm context) vào lịch sử - để lịch sử gọn,
+    # tránh phình to / lặp lại context nhiều lần qua các lượt chat.
     conversation_history.append(HumanMessage(content=user_input))
     trim_history()
 
-    # Gửi TOÀN BỘ lịch sử cho LLM, không chỉ câu hỏi hiện tại
-    response = llm.invoke(conversation_history)
+    # c) GENERATE: gửi cho LLM lịch sử hội thoại + câu hỏi hiện tại đã
+    # được augment với context (chỉ dùng bản augment cho lượt gọi này).
+    messages_for_llm = conversation_history[:-1] + [HumanMessage(content=augmented_input)]
+    response = llm.invoke(messages_for_llm)
 
-    # Lưu câu trả lời của AI vào memory để nhớ cho lượt sau
+    # d) Lưu câu trả lời của AI vào memory để nhớ cho lượt sau
     conversation_history.append(AIMessage(content=response.content))
 
     return response.content
@@ -64,9 +98,10 @@ def chat(user_input: str) -> str:
 
 # 6. VÒNG LẶP CHAT (CLI)
 if __name__ == "__main__":
-    print("Chat với Ori (gõ 'exit' để thoát)\n")
+    print("☕ Ori - Trợ lý quán cà phê DMP")
+    print("Nhập 'exit' để thoát.")
     while True:
-        user_input = input("Bạn: ").strip()
+        user_input = input("👤 Bạn: ").strip()
         if not user_input:
             continue
         if user_input.lower() == "exit":
