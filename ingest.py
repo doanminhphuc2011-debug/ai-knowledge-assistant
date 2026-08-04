@@ -106,8 +106,7 @@ def chunk_promotions(filename: str = "promotions.md") -> list[dict]:
         items = re.split(r"\n(?=\d+\.\s+\*\*)", sec)
         for item in items:
             item = item.strip()
-            # Bỏ các mẩu quá ngắn (vd. chỉ có tiêu đề H1 của cả file, không
-            # mang thông tin gì để retrieve)
+            # Bỏ các mẩu quá ngắn (vd. chỉ có tiêu đề H1 của cả file, không mang thông tin gì để retrieve)
             if not item or (item.startswith("# ") and len(item) < 80):
                 continue
             # Tránh lặp heading 2 lần khi item chính là đoạn mở đầu section
