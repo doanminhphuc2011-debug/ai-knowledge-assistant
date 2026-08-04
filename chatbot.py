@@ -67,7 +67,6 @@ def reset_history() -> None:
 
 
 # Giữ tên hàm cũ để tương thích ngược - bất kỳ code nào đang gọi chat()
-# (thay vì ask()) vẫn chạy đúng như trước, không cần sửa gì thêm.
 chat = ask
 
 

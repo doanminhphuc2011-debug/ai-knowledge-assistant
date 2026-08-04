@@ -2,5 +2,8 @@ langchain
 langchain-groq
 langchain-google-genai
 langchain-ollama
+langchain-community
+langchain-qdrant
 python-dotenv
-qdrant-client[fastembed]
+qdrant-client
+fastembed

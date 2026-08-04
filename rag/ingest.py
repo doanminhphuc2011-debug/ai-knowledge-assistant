@@ -1,7 +1,9 @@
 """
 ingest.py
 Đọc dữ liệu (menu.json, menu.md, faq.md, promotions.md), chunk theo cấu trúc
-ngữ nghĩa, và nạp (embed + upsert) vào Qdrant để phục vụ RAG cho chatbot Ori.
+ngữ nghĩa, và nạp vào Vector Database THÔNG QUA LangChain VectorStore
+(vector_store.py) - không còn gọi thẳng QdrantClient ở file này. Vector DB
+cụ thể đang dùng (hiện tại: Qdrant) chỉ vector_store.py cần biết.
 
 Chạy: python ingest.py
 Chạy lại mỗi khi nội dung menu/faq/promotions thay đổi (script sẽ xóa và
@@ -12,20 +14,11 @@ import os
 import re
 import json
 
-from dotenv import load_dotenv
-from qdrant_client import QdrantClient
+from langchain_core.documents import Document
 
-load_dotenv()
+from .vector_store import get_vector_store, reset_collection
 
-QDRANT_URL = os.getenv("QDRANT_URL")
-QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")  # để trống nếu chạy Qdrant local
-
-COLLECTION_NAME = "dmp_knowledge"
-
-# Model embedding đa ngôn ngữ (chạy local qua FastEmbed, không tốn API call).
-EMBED_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 
 
@@ -120,7 +113,25 @@ def chunk_promotions(filename: str = "promotions.md") -> list[dict]:
             })
     return chunks
 
-# 2. NẠP VÀO QDRANT
+# 2. CHUYỂN CHUNK -> LANGCHAIN DOCUMENT
+def _chunks_to_documents(chunks: list[dict]) -> list[Document]:
+    """Chuyển từng chunk dict (như trả về bởi các hàm chunk_* ở trên) thành
+    1 `langchain_core.documents.Document` - đơn vị dữ liệu chuẩn mà mọi
+    LangChain VectorStore đều hiểu.
+
+    Giữ NGUYÊN toàn bộ metadata cũ (source, type, name, category, price_m,
+    price_l) - chỉ khác 1 điểm: nội dung "text" giờ nằm ở `page_content`
+    thay vì vừa nằm trong page_content vừa lặp lại thêm 1 lần trong
+    metadata như payload cũ của Qdrant. Đây là cách tổ chức dữ liệu chuẩn
+    của LangChain, không làm mất bất kỳ field metadata nào."""
+    documents = []
+    for chunk in chunks:
+        metadata = {key: value for key, value in chunk.items() if key != "text"}
+        documents.append(Document(page_content=chunk["text"], metadata=metadata))
+    return documents
+
+
+# 3. NẠP VÀO VECTOR STORE (qua LangChain VectorStore, không gọi QdrantClient trực tiếp)
 def build_index() -> None:
     all_chunks = (
         chunk_menu_items()
@@ -128,24 +139,20 @@ def build_index() -> None:
         + chunk_faq()
         + chunk_promotions()
     )
+    documents = _chunks_to_documents(all_chunks)
 
-    client = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY)
-    client.set_model(EMBED_MODEL)
+    # Xoá sạch collection cũ trước khi nạp lại - tương đương hành vi cũ
+    # (client.delete_collection() rồi add() lại), tránh dữ liệu cũ sót lại.
+    reset_collection()
+    vector_store = get_vector_store()
 
-    if client.collection_exists(COLLECTION_NAME):
-        client.delete_collection(COLLECTION_NAME)
+    # add_documents() của LangChain tự động: embed từng Document bằng
+    # embedding model đã cấu hình trong vector_store.py, rồi upsert vào
+    # Vector DB - tương đương những gì client.add() làm trước đây, chỉ khác
+    # là đi qua interface chuẩn của LangChain thay vì API riêng của Qdrant.
+    vector_store.add_documents(documents, ids=list(range(len(documents))))
 
-    # client.add() tự động: embed từng "document" bằng FastEmbed, tạo
-    # collection với đúng kích thước vector, và upsert - không cần tự
-    # gọi model embedding hay tự tạo collection thủ công.
-    client.add(
-        collection_name=COLLECTION_NAME,
-        documents=[c["text"] for c in all_chunks],
-        metadata=all_chunks,
-        ids=list(range(len(all_chunks))),
-    )
-
-    print(f"Đã nạp {len(all_chunks)} chunks vào collection '{COLLECTION_NAME}':")
+    print(f"Đã nạp {len(all_chunks)} chunks vào Vector Store:")
     by_type: dict[str, int] = {}
     for c in all_chunks:
         by_type[c["type"]] = by_type.get(c["type"], 0) + 1
