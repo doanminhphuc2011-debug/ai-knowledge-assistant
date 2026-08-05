@@ -3,7 +3,6 @@ langchain-groq
 langchain-google-genai
 langchain-ollama
 langchain-community
-langchain-qdrant
+langchain-redis
 python-dotenv
-qdrant-client
 fastembed

@@ -472,35 +472,89 @@ def update_cart(
     current_size: str | None = None,
     new_size: str | None = None,
     new_quantity: int | None = None,
+    change_quantity: int | None = None,
 ) -> str:
-    """Cập nhật 1 món ĐÃ CÓ trong giỏ hàng: đổi size, đổi số lượng, hoặc cả hai.
+    """Cập nhật 1 món ĐÃ CÓ trong giỏ hàng: đổi size, đổi tổng số lượng, hoặc
+    TÁCH MỘT PHẦN số lượng sang size khác (phần còn lại vẫn giữ size cũ).
 
-    Dùng khi khách muốn SỬA một dòng đã đặt (không phải thêm món mới), ví dụ:
-    - "đổi thành size M"                 -> chỉ new_size
-    - "đổi thành size L"                 -> chỉ new_size
-    - "đổi thành 3 ly"                   -> chỉ new_quantity
-    - "đổi latte thành size M và 2 ly"   -> cả new_size lẫn new_quantity
+    Dùng khi khách muốn SỬA một dòng đã đặt (không phải thêm món mới).
+
+    PHÂN BIỆT new_quantity vs change_quantity (RẤT QUAN TRỌNG - dễ nhầm và
+    là nguyên nhân của 1 bug đã xảy ra trước đây):
+    - new_quantity = TỔNG SỐ LƯỢNG MỚI của CẢ DÒNG (ghi đè hoàn toàn).
+      Dùng khi khách chỉ nói "đổi thành N ly" (không nhắc gì đến việc tách
+      sang size khác). Đặt = 0 để xoá cả dòng.
+    - change_quantity = SỐ LƯỢNG CẦN TÁCH sang new_size; phần còn lại của
+      dòng cũ vẫn giữ nguyên size ban đầu. Dùng khi khách nói "đổi N ly
+      sang/thành size X" trong khi dòng hiện có nhiều hơn N ly. BẮT BUỘC
+      phải đi kèm new_size.
+
+    Ví dụ:
+    - "đổi thành size M"                      -> chỉ new_size (đổi TOÀN BỘ dòng sang size M)
+    - "đổi thành 3 ly"                          -> chỉ new_quantity=3 (ghi đè tổng số lượng)
+    - "đổi latte thành size M, tổng còn 2 ly"    -> new_size="M" + new_quantity=2 (đổi toàn bộ
+      dòng sang size M, tổng số lượng cuối = 2)
+    - "đổi 1 ly thành size M" (đang có 2 ly size L)
+        -> new_size="M", change_quantity=1
+        -> KẾT QUẢ: 1 ly size L (còn lại) + 1 ly size M (vừa tách ra) - 2 DÒNG riêng biệt
+    - "đổi 2 ly thành size L" (đang có 5 ly size M)
+        -> new_size="L", change_quantity=2
+        -> KẾT QUẢ: 3 ly size M (còn lại) + 2 ly size L (vừa tách ra)
+
+    QUY TẮC CHỌN THAM SỐ (đọc kỹ để không lặp lại bug cũ):
+    - Câu nói có dạng "đổi N ly sang/thành size X" và số lượng hiện có > N
+      -> LUÔN dùng new_size + change_quantity=N. TUYỆT ĐỐI KHÔNG dùng
+      new_quantity=N trong trường hợp này (new_quantity=N sẽ bị hiểu nhầm
+      thành "đặt lại tổng số lượng = N", làm mất số ly còn lại).
+    - Câu nói chỉ có số lượng mới, không nhắc size ("đổi thành N ly")
+      -> new_quantity=N.
+    - Câu nói đổi toàn bộ dòng sang size khác, không giới hạn số lượng nhỏ
+      hơn tổng hiện có -> chỉ new_size.
 
     Args:
         product_name: Tên món cần sửa trong giỏ.
         current_size: Size HIỆN TẠI của dòng cần sửa. Có thể BỎ QUA nếu giỏ
             hàng chỉ có đúng 1 size của món này (trường hợp phổ biến nhất).
-        new_size: Size MỚI muốn đổi sang. Bỏ qua nếu không đổi size.
-        new_quantity: Số lượng MỚI. Đặt = 0 để xoá món khỏi giỏ. Bỏ qua nếu
-            không đổi số lượng.
+        new_size: Size MỚI muốn đổi sang (toàn bộ dòng, hoặc 1 phần nếu đi
+            kèm change_quantity). Bỏ qua nếu không đổi size.
+        new_quantity: TỔNG số lượng MỚI của CẢ DÒNG (ghi đè hoàn toàn).
+            Đặt = 0 để xoá món khỏi giỏ. KHÔNG dùng chung với change_quantity.
+        change_quantity: Số lượng cần TÁCH sang new_size, phần còn lại giữ
+            nguyên size cũ. Chỉ dùng khi có new_size đi kèm. KHÔNG dùng
+            chung với new_quantity.
 
-    Cần cung cấp ÍT NHẤT 1 trong 2: new_size hoặc new_quantity.
+    Cần cung cấp ÍT NHẤT 1 trong: new_size, new_quantity, change_quantity.
     """
-    if new_size is None and new_quantity is None:
+    if new_size is None and new_quantity is None and change_quantity is None:
         return error_response(
             "no_changes_requested",
-            "Cần cho biết size mới hoặc số lượng mới để cập nhật giỏ hàng.",
+            "Cần cho biết size mới, số lượng mới, hoặc số lượng cần tách sang size khác.",
+        )
+
+    if new_quantity is not None and change_quantity is not None:
+        return error_response(
+            "conflicting_parameters",
+            "Không thể dùng đồng thời new_quantity và change_quantity. Dùng "
+            "new_quantity nếu muốn ghi đè TỔNG số lượng cả dòng, hoặc "
+            "change_quantity nếu chỉ muốn TÁCH một phần sang size khác.",
+        )
+
+    if change_quantity is not None and new_size is None:
+        return error_response(
+            "invalid_parameters",
+            "change_quantity phải đi kèm new_size (cho biết cần tách sang size nào).",
         )
 
     if new_quantity is not None and new_quantity < 0:
         return error_response(
             "invalid_quantity",
             f"Số lượng '{new_quantity}' không hợp lệ, phải là số nguyên >= 0.",
+        )
+
+    if change_quantity is not None and change_quantity <= 0:
+        return error_response(
+            "invalid_quantity",
+            f"change_quantity '{change_quantity}' không hợp lệ, phải là số nguyên dương.",
         )
 
     key, product, error_json = _locate_cart_line_for_update(product_name, current_size)
@@ -517,6 +571,70 @@ def update_cart(
             cart=_cart_summary(),
         )
 
+    # --- TÁCH một phần số lượng sang size mới (change_quantity) ---
+    # Nhánh MỚI: khác với nhánh new_size/new_quantity bên dưới (ghi đè cả
+    # dòng), ở đây dòng cũ vẫn được GIỮ LẠI với số lượng còn thiếu, chỉ tách
+    # đúng change_quantity ly sang dòng size mới (tạo dòng mới nếu chưa có,
+    # hoặc cộng dồn nếu size mới đã tồn tại sẵn trong giỏ).
+    if change_quantity is not None:
+        if change_quantity > line.quantity:
+            return error_response(
+                "invalid_quantity",
+                f"'{product['name']}' size '{line.size}' chỉ có {line.quantity} ly, "
+                f"không thể tách {change_quantity} ly.",
+                current_quantity=line.quantity,
+            )
+
+        sizes = get_product_sizes(product)
+        new_size_norm = new_size.strip().upper()
+        if new_size_norm not in sizes:
+            return error_response(
+                "invalid_size",
+                f"Món '{product['name']}' không có size '{new_size}'.",
+                valid_sizes=sorted(sizes.keys()),
+            )
+        if new_size_norm == line.size:
+            return error_response(
+                "invalid_parameters",
+                f"'{product['name']}' đã ở size '{line.size}', không thể tách sang cùng size.",
+            )
+
+        target_unit_price = sizes[new_size_norm]
+        remaining = line.quantity - change_quantity
+
+        # Nếu quantity dòng cũ = 0 (tách hết) -> xoá dòng cũ, không giữ dòng rỗng.
+        if remaining == 0:
+            del _cart[key]
+        else:
+            _cart[key].quantity = remaining
+
+        target_key = _cart_key(product["name"], new_size_norm)
+        if target_key in _cart:
+            # Size mới đã tồn tại sẵn trong giỏ -> cộng dồn quantity.
+            _cart[target_key].quantity += change_quantity
+        else:
+            _cart[target_key] = CartLine(
+                product_name=product["name"],
+                size=new_size_norm,
+                unit_price=target_unit_price,
+                quantity=change_quantity,
+            )
+
+        return success_response(
+            message=(
+                f"Đã tách {change_quantity} ly '{product['name']}' sang size '{new_size_norm}'"
+                + (f", còn lại {remaining} ly size '{line.size}'."
+                   if remaining > 0 else f" (đã hết size '{line.size}').")
+            ),
+            product_name=product["name"],
+            split_from_size=line.size,
+            split_to_size=new_size_norm,
+            quantity_moved=change_quantity,
+            remaining_in_old_size=remaining,
+            cart=_cart_summary(),
+        )
+
+    # --- Nhánh CŨ (không đổi): đổi toàn bộ size và/hoặc ghi đè tổng số lượng ---
     target_size = line.size
     if new_size is not None:
         sizes = get_product_sizes(product)
