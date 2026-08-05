@@ -84,8 +84,18 @@ def chunk_faq(filename: str = "faq.md") -> list[dict]:
 
 def chunk_promotions(filename: str = "promotions.md") -> list[dict]:
     """Tách theo từng section (##), rồi tách nhỏ tiếp theo từng mục khuyến
-    mãi/hạng thành viên (số thứ tự + **tiêu đề**), giữ tên section làm
-    ngữ cảnh đi kèm để model không bị mất ngữ cảnh khi chunk bị tách rời."""
+    mãi/hạng thành viên, giữ tên section làm ngữ cảnh đi kèm để model
+    không bị mất ngữ cảnh khi chunk bị tách rời.
+
+    Mỗi mục con có thể được viết theo 1 trong 2 kiểu list Markdown:
+    - Đánh số:      "1. **Tiêu đề**"   (vd. section I - các chương trình KM)
+    - Gạch đầu dòng: "- **Tiêu đề**"   (vd. section II - các hạng thành viên)
+    Trước đây chỉ tách theo kiểu đánh số, nên cả section II bị dồn thành 1
+    chunk lớn (4 hạng thành viên gộp chung), làm loãng vector embedding và
+    khiến câu hỏi hẹp (vd. "Hạng Kim Cương") không tìm thấy context. Các
+    dòng con lồng bên trong (thụt lề, vd. "  - Giảm 5%...") KHÔNG khớp
+    pattern này (thiếu "**" ngay sau dấu "-", hoặc có khoảng trắng đầu
+    dòng) nên vẫn được giữ nguyên trong chunk cha, không bị tách vụn."""
     text = open(_path(filename), encoding="utf-8").read()
     sections = re.split(r"\n(?=## )", text)
     chunks = []
@@ -96,7 +106,7 @@ def chunk_promotions(filename: str = "promotions.md") -> list[dict]:
         heading_match = re.match(r"## (.+)", sec)
         heading = heading_match.group(1) if heading_match else ""
 
-        items = re.split(r"\n(?=\d+\.\s+\*\*)", sec)
+        items = re.split(r"\n(?=\d+\.\s+\*\*|-\s+\*\*)", sec)
         for item in items:
             item = item.strip()
             # Bỏ các mẩu quá ngắn (vd. chỉ có tiêu đề H1 của cả file, không mang thông tin gì để retrieve)

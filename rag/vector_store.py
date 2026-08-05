@@ -26,11 +26,23 @@ from qdrant_client.http.models import Distance, VectorParams
 
 from .embeddings import get_embeddings
 
-load_dotenv()
+load_dotenv()  # đọc .env để lấy QDRANT_URL, QDRANT_API_KEY
 
 QDRANT_URL = os.getenv("QDRANT_URL")
 QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")  # để trống nếu chạy Qdrant local
 COLLECTION_NAME = "dmp_knowledge"
+
+# Timeout (giây) cho MỌI request gửi tới Qdrant Cloud qua client này.
+# BUG ĐÃ SỬA: trước đây không truyền timeout khi khởi tạo QdrantClient, nên
+# thư viện qdrant-client tự dùng mặc định 5s cho REST. 5s đủ cho request nhẹ
+# (vd. get_collections(), collection_exists() - như check_qdrant_connection.py
+# đang set timeout=10 và chạy được) nhưng KHÔNG đủ cho similarity_search_with_score()
+# - request nặng hơn (gửi vector + Qdrant phải chạy ANN search) từ máy VN tới
+# cluster eu-central-1, đặc biệt nếu đi qua VPN/firewall công ty (network chậm
+# hơn bình thường) -> gây httpx.ReadTimeout dù kết nối/API key vẫn đúng, không
+# liên quan gì tới các fix chunking/answer-matching trước đó.
+# Cho phép override qua .env (QDRANT_TIMEOUT) nếu 30s vẫn chưa đủ với mạng của bạn.
+QDRANT_TIMEOUT = float(os.getenv("QDRANT_TIMEOUT", "30"))
 
 
 @lru_cache(maxsize=1)
@@ -38,7 +50,7 @@ def _get_qdrant_client() -> QdrantClient:
     """Client Qdrant thô - CHỈ dùng nội bộ trong file này (để quản lý vòng
     đời collection). Các module khác không import trực tiếp từ đây, đúng
     tinh thần "chỉ vector_store.py biết đang chạy trên Qdrant"."""
-    return QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY)
+    return QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY, timeout=QDRANT_TIMEOUT)
 
 
 def _vector_size() -> int:

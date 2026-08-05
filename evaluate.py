@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import csv
 import json
+import re
 import time
 from typing import Any
 
@@ -78,20 +79,48 @@ def check_context_precision(
     return relevant / len(retrieved_sources)
 
 
+def _normalize_for_match(text: str) -> str:
+    """Chuẩn hoá text trước khi so khớp keyword, để không bị lệch điểm vì
+    khác biệt HÌNH THỨC chứ không phải nội dung sai:
+
+    1. Gộp mọi loại khoảng trắng - kể cả narrow no-break space (\\u202f) mà
+       model (Groq) tự chèn trước số/đơn vị theo quy ước đánh máy tiếng
+       Việt - về 1 khoảng trắng chuẩn (\\s của Python ở chế độ Unicode mặc
+       định đã khớp sẵn \\u202f, không cần liệt kê riêng).
+    2. Bỏ khoảng trắng ngay trước dấu % (vd. "0 %" -> "0%").
+    3. Coi dấu chấm và dấu phẩy đứng giữa số là NHƯ NHAU (đều là dấu phân
+       cách hàng nghìn) - vì SYSTEM_PROMPT yêu cầu bot luôn trả lời số theo
+       định dạng dấu chấm (86.000 VNĐ) trong khi test case có thể viết
+       theo định dạng dấu phẩy (86,000) - cả hai cùng biểu diễn 1 con số,
+       không nên bị tính là "trả lời sai" chỉ vì khác quy ước hiển thị."""
+    t = text.lower()
+    t = re.sub(r"\s+", " ", t)
+    t = re.sub(r"(\d)\s+%", r"\1%", t)
+    t = re.sub(r"(?<=\d)[.,](?=\d{3}\b)", "", t)
+    return t
+
+
 def check_answer_correct(
     answer: str, expected_keywords: list[str], match_ratio_threshold: float = 0.5
 ) -> bool:
     """Answer Accuracy (cho 1 câu hỏi): ĐÚNG khi tỉ lệ expected_keywords xuất
-    hiện (không phân biệt hoa/thường) trong câu trả lời đạt >= 50%.
+    hiện (không phân biệt hoa/thường, đã chuẩn hoá khoảng trắng và định
+    dạng số) trong câu trả lời đạt >= 50%.
 
     Trước đây yêu cầu TẤT CẢ keyword phải khớp - quá cứng nhắc vì LLM có
     thể diễn đạt lại (đổi định dạng số, bỏ bớt chi tiết phụ...) mà vẫn trả
     lời đúng về mặt nội dung. Dùng tỉ lệ khớp giúp đánh giá công bằng hơn
-    trong khi vẫn giữ được tín hiệu "trả lời có đúng trọng tâm hay không"."""
+    trong khi vẫn giữ được tín hiệu "trả lời có đúng trọng tâm hay không".
+
+    So khớp trên bản đã chuẩn hoá (_normalize_for_match), không so trực
+    tiếp trên answer/kw gốc - tránh chấm sai các câu trả lời ĐÚNG nội dung
+    nhưng khác định dạng số hoặc khoảng trắng so với keyword kỳ vọng."""
     if not expected_keywords:
         return True
-    answer_lower = answer.lower()
-    matched = sum(1 for kw in expected_keywords if kw.lower() in answer_lower)
+    answer_norm = _normalize_for_match(answer)
+    matched = sum(
+        1 for kw in expected_keywords if _normalize_for_match(kw) in answer_norm
+    )
     match_ratio = matched / len(expected_keywords)
     return match_ratio >= match_ratio_threshold
 

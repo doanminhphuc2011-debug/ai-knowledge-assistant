@@ -1,0 +1,38 @@
+﻿Question,Expected Source,Retrieved Sources,Retriever Correct,Answer Correct,Hallucination,Latency,Answer
+Cà phê muối giá bao nhiêu?,menu_item,"menu_item, menu_item, menu_item, menu_item, menu_item",True,True,False,0.894,"Cà Phê Muối có giá như sau:
+- Size M: **35.000 VNĐ**  
+- Size L: **43.000 VNĐ**  
+
+Bạn muốn chọn size nào?"
+Trà đào sả cam giá bao nhiêu tiền?,menu_item,"menu_item, menu_item, menu_item, menu_item, menu_item",True,True,False,0.975,"Trà Đào Sả Cam:  
+- Size M: 38.000 VNĐ  
+- Size L: 46.000 VNĐ  
+
+Bạn muốn chọn size nào?"
+Quán có bán trà sữa ô long nướng không?,menu_item,"faq, menu_item, menu_item, promotion, menu_item",True,True,False,1.043,Hiện tại mình không có thông tin về “trà sữa ô long nướng”. Bạn có thể gọi hotline hoặc hỏi ngay nhân viên quán để được hỗ trợ nhé!
+Bánh tiramisu giá bao nhiêu?,menu_item,"menu_item, menu_item, menu_item, menu_item, menu_item",True,True,False,0.742,Bánh tiramisu (Bánh Tiramisu Truyền Thống) giá 35 000 VNĐ.
+Đá xay Caramel Coffee Freeze size L giá bao nhiêu?,menu_item,"menu_item, menu_item, menu_item, menu_item, menu_item",True,True,False,0.881,Caramel Coffee Freeze size L giá **57.000 VNĐ**.
+Bạc xỉu và cà phê sữa đá cái nào rẻ hơn?,menu_item,"menu_item, menu_item, menu_item, menu_item, menu_item",True,True,False,15.771,"Cà Phê Sữa Đá (size M) rẻ hơn, chỉ 29.000 VNĐ so với Bạc Xỉu (size M) 32.000 VNĐ. Nếu muốn chọn thêm, mình có thể giúp bạn đặt nhé!"
+Tôi có thể chọn mức đường khi gọi món không?,menu_option,"faq, faq, menu_option, faq",True,True,False,5.2,"Bạn có thể tùy chỉnh mức đường khi gọi món, chọn 0 % (không đường), 30 % (ít), 50 % (vừa), 70 % hoặc 100 % (chuẩn ngọt). Nếu cần hỗ trợ thêm gì, mình sẵn sàng giúp!"
+Thêm topping trân châu đen thì tính thêm bao nhiêu tiền?,menu_option,"menu_item, promotion, menu_option",True,True,False,17.191,Topping trân châu đen tính thêm 8.000 VNĐ mỗi phần.
+Quán đang có chương trình khuyến mãi gì không?,promotion,"promotion, faq, promotion, promotion, faq",True,True,False,19.456,"Quán đang có 2 chương trình khuyến mãi:
+
+1. **Happy Hour (Giảm 20%)** – từ 14:00 – 16:30, Thứ 2‑Thứ 6, áp dụng cho tất cả các món trong nhóm **Cà Phê Truyền Thống** và **Cà Phê Máy** khi mua tại cửa hàng.  
+2. **Morning Combo (Morning Combo)** – từ 06:30 – 09:00 mỗi ngày, 1 Cà Phê Sữa Đá / Đen Đá (Size M) + 1 Bánh Croissant Bơ Tỏi chỉ với 49.000 VNĐ (tiết kiệm 9.000 VNĐ so với mua lẻ).
+
+Ngoài ra, khi đặt qua Fanpage/Zalo/Hotline, quán còn miễn phí giao hàng trong bán kính 3 km cho đơn hàng từ 100.000 VNĐ."
+Khung giờ vàng giảm giá áp dụng lúc mấy giờ?,promotion,"promotion, promotion, promotion",True,True,False,6.689,"Khung giờ vàng giảm giá áp dụng từ **14:00 đến 16:30**, từ thứ 2 đến thứ 6 hàng tuần."
+Thứ 3 có ưu đãi gì cho trà sữa không?,promotion,"promotion, faq, menu_item, menu_item, menu_item",True,True,False,17.38,"Có! Vào Thứ 3 (Milk Tea Tuesday) quán áp dụng ưu đãi **Mua 1 tặng 1 Size M** cho tất cả các loại trà sữa.  
+- Bạn mua một ly trà sữa bất kỳ Size L, quán sẽ tặng ngay một ly Trà sữa DMP Truyền Thống Size M (hoặc voucher giảm 50% cho lần mua sau).  
+
+Vậy khi ghé vào Thứ 3, bạn chỉ cần chọn một ly Size L, và quán sẽ miễn phí thêm một ly Size M nhé!"
+Cách tích điểm thành viên của quán như thế nào?,promotion,(none),False,False,False,16.446,"Xin lỗi, hiện tại tôi không có thông tin về cách tích điểm thành viên. Bạn có thể gọi số hotline hoặc nhờ nhân viên quán hỗ trợ nhé."
+Hạng Kim Cương có những ưu đãi gì?,promotion,(none),False,True,False,15.18,"Hiện tại chưa có thông tin về hạng Kim Cương. Nếu bạn muốn biết thêm chi tiết, vui lòng liên hệ trực tiếp với nhân viên quán hoặc gọi hotline."
+Quán mở cửa từ mấy giờ đến mấy giờ?,faq,"faq, promotion, promotion",True,True,False,4.1,"Quán mở cửa từ **06:30 sáng** đến **22:30 tối**, mọi ngày trong tuần (cũng bao gồm ngày lễ, Tết)."
+Quán có chỗ đậu xe ô tô không?,faq,"faq, faq, faq, faq",True,True,False,19.202,"Có, quán DMP có bãi đỗ xe ô tô ngay bên hông quán. Đặc biệt, phí gửi xe là miễn phí cho khách hàng uống tại quán, và có bảo vệ dắt xe, trông giữ cẩn thận. Nếu cần thêm thông tin, cứ thoải mái hỏi nhé!"
+Quán có phòng họp cho nhóm đông người không?,faq,"faq, faq, faq, faq",True,True,False,18.314,"Có, quán DMP có 2 phòng họp (Meeting Room) tại Tầng 3, có thể chứa từ 8 đến 15 người. Bạn chỉ cần đặt trước qua hotline hoặc Fanpage; không mất phí phụ thu phòng nếu tổng hóa đơn đạt trên 300.000 VNĐ. Nếu bạn cần thông tin thêm hoặc muốn đặt phòng, cứ cho mình biết nhé!"
+Quán có giao hàng tận nơi không?,faq,"faq, faq, faq, faq, faq",True,True,False,5.229,"Vâng, quán DMP có giao hàng tận nơi. Bạn có thể đặt món qua Fanpage/Zalo/Hotline của chúng tôi – Freeship trong bán kính 3km cho đơn hàng từ 100.000 VNĐ. Ngoài ra, quán còn được liệt kê trên ShopeeFood, GrabFood, Gojek, Baemin (tìm tên “Cà Phê DMP – Thủ Đức”). Nếu cần hỗ trợ đặt hàng, cứ thoải mái liên hệ nhé!"
+Người ăn chay có thể đổi sang sữa hạt không?,faq,"faq, menu_item, menu_item, menu_item, menu_item",True,True,False,18.421,"Bạn hoàn toàn có thể đổi sang sữa hạt!  
+Đối với tất cả các món Latte, Cappuccino và Trà Sữa, bạn chỉ cần yêu cầu nhân viên thay sữa bò tươi bằng **Sữa Hạt Hạnh Nhân (Almond Milk)** hoặc **Sữa Đậu Nành (Soy Milk)** – không mất thêm phí."
+Quán có bán bia hoặc rượu không?,none,faq,False,True,False,0.986,"Xin lỗi, hiện tại tôi không có thông tin về việc quán bán bia hoặc rượu. Bạn có thể liên hệ hotline hoặc hỏi nhân viên quán để biết thêm chi tiết."
+Quán có giảm giá riêng cho sinh viên không?,none,"faq, promotion, menu_item, menu_item, faq",False,True,False,19.093,"Xin lỗi, hiện tại tôi chưa có thông tin về chương trình giảm giá dành riêng cho sinh viên. Bạn có thể liên hệ trực tiếp với quán qua Hotline hoặc Fanpage để được hỗ trợ chi tiết hơn."
