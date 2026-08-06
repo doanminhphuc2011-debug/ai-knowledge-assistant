@@ -1,13 +1,10 @@
 """
 ingest.py
 Đọc dữ liệu (menu.json, menu.md, faq.md, promotions.md), chunk theo cấu trúc
-ngữ nghĩa, và nạp vào Vector Database THÔNG QUA LangChain VectorStore
-(vector_store.py) - không còn gọi thẳng QdrantClient ở file này. Vector DB
-cụ thể đang dùng (hiện tại: Qdrant) chỉ vector_store.py cần biết.
+ngữ nghĩa và nạp vào Vector Database thông qua LangChain VectorStore.
 
-Chạy: python ingest.py
-Chạy lại mỗi khi nội dung menu/faq/promotions thay đổi (script sẽ xóa và
-tạo lại collection từ đầu để tránh dữ liệu cũ còn sót lại).
+Vector Database cụ thể (Redis Cloud, Qdrant, ...) được cấu hình hoàn toàn
+trong vector_store.py. File này không phụ thuộc vào bất kỳ Vector DB cụ thể nào.
 """
 
 import os
@@ -56,17 +53,69 @@ def chunk_menu_items(filename: str = "menu.json") -> list[dict]:
 
 
 def chunk_menu_customization(filename: str = "menu.md") -> list[dict]:
-    """Chỉ lấy phần VII (tùy chọn đường/đá/topping) trong menu.md, vì phần
-    này KHÔNG có trong menu.json - tránh trùng lặp các món đã chunk ở trên."""
+    """Lấy các section trong menu.md KHÔNG liệt kê món ăn theo món (vì các
+    section liệt kê món đã trùng với menu.json, chunk_menu_items() lo phần
+    đó rồi) - phần còn lại là thông tin cấu hình/tuỳ chọn chung (đường, đá,
+    topping...) không có mặt trong menu.json.
+
+    QUAN TRỌNG: việc phân biệt "section liệt kê món" vs "section còn lại"
+    dựa HOÀN TOÀN vào CẤU TRÚC danh sách Markdown, KHÔNG dựa vào số thứ tự
+    La Mã hay tiêu đề section cụ thể nào:
+    - Mọi section liệt kê món trong menu.md đều dùng list ĐÁNH SỐ dạng
+      "N. **Tên món**" (vd. "1. **Cà Phê Đen Đá**") - đây chính là format
+      dùng để liệt kê 40 món trong file, khớp 1-1 với các record trong
+      menu.json.
+    - Section còn lại (hiện tại là "VII. TÙY CHỌN...") không dùng list
+      đánh số kiểu đó mà dùng bullet "* **Nhãn:** giá trị".
+    Nhờ dựa vào cấu trúc thay vì "## VII" cố định: nếu sau này thêm/bớt/
+    đổi thứ tự section món ăn trong menu.md, hoặc đổi tên section tuỳ
+    chọn, hàm này vẫn nhận đúng section - miễn các section liệt kê món
+    tiếp tục theo đúng convention đánh số hiện có của toàn bộ file.
+
+    Trong mỗi section được nhận, tách tiếp theo từng bullet cấp cha (dạng
+    "* **Tiêu đề:** ...") thay vì gộp NGUYÊN section thành 1 chunk - nếu
+    không, các khái niệm độc lập như "Mức Đường", "Mức Đá", "Topping" sẽ
+    bị nhét chung vào 1 vector duy nhất, làm loãng embedding (cùng loại
+    vấn đề mà chunk_promotions() bên dưới đã xử lý cho section các hạng
+    thành viên). Giữ heading cha làm tiền tố cho mỗi bullet để không mất
+    ngữ cảnh khi tách nhỏ. Dòng con thụt lề (vd. "  - Trân châu đen") KHÔNG
+    khớp pattern "* **" (có khoảng trắng đầu dòng) nên vẫn được giữ
+    nguyên trong chunk cha của nó, không bị tách vụn."""
     text = open(_path(filename), encoding="utf-8").read()
-    match = re.search(r"## VII\..*", text, re.S)
-    if not match:
-        return []
-    return [{
-        "text": match.group(0).strip(),
-        "source": "menu.md",
-        "type": "menu_option",
-    }]
+    sections = re.split(r"\n(?=## )", text)
+
+    chunks = []
+    for sec in sections:
+        sec = sec.strip()
+        heading_match = re.match(r"## (.+)", sec)
+        # Bỏ phần mở đầu file trước heading "## " đầu tiên (H1 title + đoạn
+        # giới thiệu chung) - không phải 1 section thực sự, không có gì để
+        # trích xuất theo cấu trúc "tuỳ chọn". Điều kiện này chỉ dựa vào
+        # việc có/không có heading cấp "## ", không dựa vào nội dung.
+        if not sec or heading_match is None:
+            continue
+        # Bỏ section liệt kê món (xem giải thích ở docstring) - phát hiện
+        # thuần theo cấu trúc list đánh số, không hardcode số La Mã.
+        if re.search(r"\n\d+\.\s+\*\*", sec):
+            continue
+
+        heading = heading_match.group(1)
+        items = re.split(r"\n(?=\*\s+\*\*)", sec)
+        for item in items:
+            item = item.strip()
+            # Bỏ mẩu chỉ gồm đúng 1 dòng heading Markdown, không có nội dung
+            # theo sau (cùng logic lọc heading-only đã dùng ở chunk_promotions).
+            if not item or re.fullmatch(r"#{1,6}\s+.+", item):
+                continue
+            prefixed = item if item.startswith("##") else (
+                f"[{heading}]\n{item}" if heading else item
+            )
+            chunks.append({
+                "text": prefixed,
+                "source": "menu.md",
+                "type": "menu_option",
+            })
+    return chunks
 
 
 def chunk_faq(filename: str = "faq.md") -> list[dict]:
@@ -109,8 +158,17 @@ def chunk_promotions(filename: str = "promotions.md") -> list[dict]:
         items = re.split(r"\n(?=\d+\.\s+\*\*|-\s+\*\*)", sec)
         for item in items:
             item = item.strip()
-            # Bỏ các mẩu quá ngắn (vd. chỉ có tiêu đề H1 của cả file, không mang thông tin gì để retrieve)
-            if not item or (item.startswith("# ") and len(item) < 80):
+            # Bỏ các mẩu KHÔNG mang thông tin gì để retrieve: item chỉ gồm
+            # ĐÚNG 1 dòng heading Markdown (#, ##, ###...), không có nội
+            # dung nào theo sau. Trước đây chỉ check `item.startswith("# ")`
+            # (heading cấp H1) nên bỏ sót heading cấp H2/H3 (## , ###...) -
+            # các section trong promotions.md đều dùng "## " nên chunk
+            # heading-only (vd. "## I. CHƯƠNG TRÌNH KHUYẾN MÃI CỐ ĐỊNH...")
+            # bị lọt vào vector store. re.fullmatch không có flag re.S nên
+            # "." không khớp xuống dòng - CHỈ khớp khi TOÀN BỘ item đúng 1
+            # dòng heading, không khớp nếu có nội dung ở dòng sau (vẫn giữ
+            # nguyên các chunk hợp lệ như "## II. ...\n\nKhách hàng...").
+            if not item or re.fullmatch(r"#{1,6}\s+.+", item):
                 continue
             # Tránh lặp heading 2 lần khi item chính là đoạn mở đầu section
             prefixed = item if item.startswith("##") else (
