@@ -6,8 +6,8 @@ lúc truy vấn) - đảm bảo 2 bên LUÔN dùng cùng 1 model. Trước đây
 được dùng chung, nhưng qua 2 hằng số EMBED_MODEL khai báo LẶP LẠI độc lập ở
 cả ingest.py lẫn rag.py - gộp về đây để chỉ có 1 nơi duy nhất cần đúng.
 
-Model GIỮ NGUYÊN so với trước khi refactor:
-"sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2", chạy local
+
+"intfloat/multilingual-e5-large", chạy local
 qua FastEmbed (không tốn API call, không đổi). Trước đây Qdrant Client tự
 dùng model này nội bộ qua `client.set_model()`; giờ được bọc qua lớp
 `Embeddings` chuẩn của LangChain (FastEmbedEmbeddings) để tương thích với
@@ -21,7 +21,7 @@ from functools import lru_cache
 from langchain_community.embeddings import FastEmbedEmbeddings
 from langchain_core.embeddings import Embeddings
 
-EMBED_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+EMBED_MODEL = "intfloat/multilingual-e5-large"
 
 
 @lru_cache(maxsize=1)
