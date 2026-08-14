@@ -1,0 +1,94 @@
+﻿Question,Expected Source,Retrieved Sources,Retriever Correct,Answer Correct,Hallucination,Latency,Answer
+Cà phê muối giá bao nhiêu?,menu_item,"menu_item, menu_item, menu_item, menu_item, menu_item",True,True,False,12.131,"Cà Phê Muối có giá là:
+- **Size M**: 35.000 VNĐ
+- **Size L**: 43.000 VNĐ
+
+Bạn có muốn đặt dùng thử không ạ?"
+Trà đào sả cam giá bao nhiêu tiền?,menu_item,"menu_item, menu_item, menu_item, menu_item, menu_item",True,True,False,3.299,"Dạ, Trà Đào Sả Cam có giá như sau ạ:
+- **Size M:** 38.000 VNĐ
+- **Size L:** 46.000 VNĐ
+
+Bạn có muốn đặt dùng thử không ạ?"
+Quán có bán trà sữa ô long nướng không?,menu_item,"menu_item, faq, menu_item, menu_item, faq",True,True,False,13.287,"DMP có bán Trà Sữa Ô Long Nướng bạn nhé! Đây cũng là một trong những món best-seller của quán với hương vị trà ô long sao cháy thơm mùi khói nhẹ, kết hợp vị béo thơm rất cuốn.
+
+Giá của món này là:
+- **Size M:** 39.000 VNĐ
+- **Size L:** 47.000 VNĐ
+
+Bạn có muốn đặt dùng thử không ạ?"
+Bánh tiramisu giá bao nhiêu?,menu_item,"menu_item, menu_item, menu_item, menu_item, promotion",True,True,False,4.874,"Bánh Tiramisu Truyền Thống có giá là 35.000 VNĐ bạn nhé. Bánh mềm mịn, đậm vị Espresso và rượu Kahlua rất ngon ạ. Bạn có muốn đặt dùng thử không?"
+Đá xay Caramel Coffee Freeze size L giá bao nhiêu?,menu_item,"menu_item, menu_item, menu_item, menu_item, menu_item",True,True,False,24.196,"Caramel Coffee Freeze size L có giá là 57.000 VNĐ bạn nhé. 
+
+Món này là espresso đá xay caramel phủ thạch cà phê giòn rất thơm ngon. Bạn có muốn đặt thưởng thức không ạ?"
+Bạc xỉu và cà phê sữa đá cái nào rẻ hơn?,menu_item,"menu_item, promotion, menu_item, menu_item, menu_item",True,True,False,7.581,"Cà Phê Sữa Đá rẻ hơn Bạc Xỉu bạn nhé. 
+
+Cụ thể giá của 2 món như sau:
+- **Cà Phê Sữa Đá:** Size M giá 29.000 VNĐ, Size L giá 37.000 VNĐ.
+- **Bạc Xỉu:** Size M giá 32.000 VNĐ, Size L giá 40.000 VNĐ."
+Tôi có thể chọn mức đường khi gọi món không?,menu_option,"faq, menu_option, menu_option, menu_option, menu_item",True,True,False,3.301,"Hoàn toàn được bạn nhé! Bạn có thể tùy chỉnh các mức đường khi đặt món tại quán bao gồm: 0% (Không đường), 30% (Ít đường), 50% (Vừa), 70% hoặc 100% (Chuẩn ngọt mặc định của quán)."
+Thêm topping trân châu đen thì tính thêm bao nhiêu tiền?,menu_option,"menu_option, menu_item, menu_item, menu_item, menu_item",True,True,False,3.517,Thêm topping trân châu đen thì tính thêm 8.000 VNĐ/phần bạn nhé! Bạn có muốn đặt món gì kèm topping không ạ?
+Quán đang có chương trình khuyến mãi gì không?,promotion,"promotion, promotion, promotion, promotion, promotion",True,True,False,11.617,"Hiện tại quán DMP đang có các chương trình khuyến mãi cố định như sau:
+
+1. **Morning Combo (Combo Đi Học / Đi Làm):**
+   - **Thời gian:** 06:30 - 09:00 sáng hàng ngày.
+   - **Ưu đãi:** 1 Cà Phê Sữa Đá / Đen Đá (Size M) + 1 Bánh Croissant Bơ Tỏi giá chỉ **49.000 VNĐ** (tiết kiệm 9.000 VNĐ).
+
+2. **Milk Tea Tuesday (Ngày Hội Trà Sữa):**
+   - **Thời gian:** Cả ngày Thứ 3 hàng tuần.
+   - **Ưu đãi:** Mua 1 ly Trà Sữa bất kỳ Size L tặng 1 ly Trà Sữa DMP Truyền Thống Size M (hoặc Voucher giảm 50% cho lần mua sau).
+
+3. **Happy Hour (Khung Giờ Vàng):**
+   - **Thời gian:** 14:00 - 16:30, từ Thứ 2 đến Thứ 6.
+   - **Ưu đãi:** Giảm 20% cho các món thuộc nhóm Cà Phê Truyền Thống và Cà Phê Máy khi mua tại cửa hàng.
+
+Ngoài ra, quán còn có **Chương trình tích điểm thành viên (DMP Member Club)** với nhiều ưu đãi như giảm 5% vào ngày sinh nhật cho Hạng Bạc.
+
+*Lưu ý:* Các chương trình khuyến mãi không áp dụng đồng thời trên cùng một hóa đơn. 
+
+Bạn quan tâm đến chương trình nào để tôi tư vấn chi tiết hơn nhé!"
+Khung giờ vàng giảm giá áp dụng lúc mấy giờ?,promotion,"promotion, promotion, promotion, menu_item, promotion",True,True,False,4.434,"Chương trình Khung Giờ Vàng (Happy Hour) giảm 20% áp dụng từ **14:00 - 16:30, từ Thứ 2 đến Thứ 6 hàng tuần** bạn nhé. 
+
+Ưu đãi này áp dụng cho toàn bộ các món trong nhóm Cà Phê Truyền Thống và Cà Phê Máy khi mua trực tiếp tại cửa hàng ạ."
+Thứ 3 có ưu đãi gì cho trà sữa không?,promotion,"promotion, promotion, faq, promotion, faq",True,True,False,13.646,"Vào Thứ 3 hàng tuần, quán tôi có chương trình **Ngày Hội Trà Sữa - Milk Tea Tuesday** vô cùng hấp dẫn:
+
+Khi bạn mua 1 ly Trà Sữa bất kỳ Size L, bạn sẽ được **tặng 1 ly Trà Sữa DMP Truyền Thống Size M** (hoặc nhận Voucher giảm 50% cho lần mua sau). 
+
+Chương trình áp dụng cả ngày Thứ 3. Bạn có muốn đặt ly trà sữa nào không ạ?"
+Cách tích điểm thành viên của quán như thế nào?,promotion,"promotion, promotion, promotion, promotion, promotion",True,True,False,5.808,"Để tích điểm thành viên trong chương trình DMP Member Club, bạn chỉ cần đọc **Số điện thoại** cho thu ngân khi thanh toán để hệ thống tự động tích điểm.
+
+**Quy đổi điểm:**
+- 10.000 VNĐ chi tiêu = 1 Điểm tích lũy.
+
+**Quyền lợi các hạng thành viên:**
+- **Hạng Bạc (Dưới 50 điểm):** Giảm 5% tổng hóa đơn vào ngày sinh nhật.
+- **Hạng Vàng (50 - 150 điểm):** Giảm 10% tổng hóa đơn vào ngày sinh nhật và được đổi 50 điểm lấy 1 ly Cà Phê Sữa / Cà Phê Đen / Bạc Xỉu Size M miễn phí.
+- **Hạng Kim Cương (Trên 150 điểm):** Giảm 15% tổng hóa đơn vào ngày sinh nhật, giảm cố định 5% cho mọi đơn hàng uống tại quán và miễn phí nâng size M -> L cho 1 ly đồ uống mỗi tuần.
+
+Nếu bạn cần hỗ trợ thêm thông tin gì, cứ báo tôi nhé!"
+Hạng Kim Cương có những ưu đãi gì?,promotion,"promotion, menu_option, promotion, promotion, menu_option",True,True,False,27.95,"Chào bạn, với hạng Kim Cương (trên 150 điểm) tại DMP, bạn sẽ nhận được các ưu đãi sau:
+
+- **Giảm 15%** tổng hóa đơn vào ngày sinh nhật.
+- **Giảm cố định 5%** cho mọi đơn hàng uống tại quán.
+- **Miễn phí nâng size M -> L** cho 1 ly đồ uống mỗi tuần.
+
+Bạn cần tôi hỗ trợ thêm thông tin gì khác không ạ?"
+Quán mở cửa từ mấy giờ đến mấy giờ?,faq,"faq, faq, promotion, faq, menu_item",True,True,False,21.84,"Chào bạn, quán DMP mở cửa từ 06:30 sáng đến 22:30 tối tất cả các ngày trong tuần (kể cả ngày lễ, Tết) nhé!"
+Quán có chỗ đậu xe ô tô không?,faq,"faq, faq, faq, faq, menu_item",True,True,False,3.016,"Dạ có bạn nhé! Quán có bãi đỗ xe ô tô ngay bên hông quán và gửi xe hoàn toàn miễn phí cho khách hàng uống tại quán, có bảo vệ trông giữ cẩn thận ạ."
+Quán có phòng họp cho nhóm đông người không?,faq,"faq, faq, faq, faq, promotion",True,True,False,22.292,"Quán tôi có 2 phòng họp (Meeting Room) tại Tầng 3, sức chứa từ 8 - 15 người và có trang bị sẵn bảng viết, máy chiếu.
+
+Bạn chỉ cần đặt trước qua hotline hoặc Fanpage của quán. Đặc biệt, phòng họp sẽ không mất phí phụ thu nếu tổng hóa đơn đạt trên 300.000 VNĐ bạn nhé!"
+Quán có giao hàng tận nơi không?,faq,"faq, faq, faq, promotion, promotion",True,True,False,20.861,"Dạ có! Bạn có thể đặt giao hàng qua 2 kênh sau ạ:
+
+1. **Đặt trực tiếp qua Fanpage/Zalo/Hotline của quán**: Được miễn phí vận chuyển trong bán kính 3km cho đơn hàng từ 100.000 VNĐ.
+2. **Đặt qua các ứng dụng giao đồ ăn**: ShopeeFood, GrabFood, Gojek, Baemin (bạn tìm kiếm tên ""Cà Phê DMP - Thủ Đức"" nhé)."
+Người ăn chay có thể đổi sang sữa hạt không?,faq,"faq, menu_item, promotion, menu_item, menu_item",True,True,False,5.33,"Có bạn nhé! Bạn có thể yêu cầu đổi từ sữa bò tươi sang **Sữa Hạt Hạnh Nhân (Almond Milk)** hoặc **Sữa Đậu Nành (Soy Milk)** cho tất cả các món Latte, Cappuccino và Trà Sữa mà hoàn toàn **không phụ thu thêm tiền** ạ."
+Quán có bán bia hoặc rượu không?,none,"faq, menu_item, faq, faq, faq",False,True,False,53.02,"Hiện tại tôi chưa có thông tin về việc quán có phục vụ đồ uống cồn như bia hay rượu hay không. Bạn vui lòng liên hệ nhân viên tại quán hoặc hotline để được hỗ trợ chi tiết nhé. 
+
+Tuy nhiên, nếu bạn thích vị rượu nhẹ, quán có món **Bánh Tiramisu Truyền Thống** (35.000 VNĐ) đậm vị Espresso và rượu Kahlua rất thơm ngon đấy ạ!"
+Quán có giảm giá riêng cho sinh viên không?,none,"promotion, faq, promotion, faq, promotion",False,True,False,46.669,"Hiện tại tôi chưa có thông tin về chương trình giảm giá riêng dành cho sinh viên. 
+
+Tuy nhiên, bạn có thể tham khảo một số chương trình ưu đãi hấp dẫn khác tại quán như:
+- **Khung Giờ Vàng (Happy Hour):** Giảm ngay 20% cho toàn bộ món trong nhóm Cà Phê Truyền Thống và Cà Phê Máy từ 14:00 - 16:30 (Thứ 2 đến Thứ 6 hàng tuần).
+- **Chương trình tích điểm DMP Member Club:** Tích điểm để nhận giảm giá ngày sinh nhật, giảm giá cố định hóa đơn và miễn phí nâng size đồ uống.
+
+Ngoài ra, Tầng 2 và Tầng 3 của quán có không gian yên tĩnh rất thích hợp để học tập và làm việc nữa bạn nhé!"

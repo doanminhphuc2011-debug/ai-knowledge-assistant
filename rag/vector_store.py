@@ -118,10 +118,5 @@ def reset_collection() -> None:
 
 @lru_cache(maxsize=1)
 def get_vector_store() -> VectorStore:
-    """Trả về 1 LangChain VectorStore (Redis) đã sẵn sàng dùng - index sẽ
-    tự được tạo (nếu chưa tồn tại) bởi chính RedisVectorStore, dùng đúng
-    schema/metric khai báo ở _build_config().
-
-    ĐÂY LÀ HÀM DUY NHẤT mà ingest.py/retriever.py/rag.py cần gọi - chúng
-    hoàn toàn không biết bên trong đang là RedisVectorStore."""
-    return _ScoreAdjustedRedisVectorStore(get_embeddings(), config=_build_config())
+    store = _ScoreAdjustedRedisVectorStore(get_embeddings(), config=_build_config())
+    return store

@@ -12,6 +12,7 @@ tiết đã được tách sang các module chuyên trách, mỗi module 1 trác
 - rag.py           : truy xuất context từ Qdrant (không đổi từ trước)
 - tools.py         : định nghĩa tool + giỏ hàng (không đổi từ trước)
 """
+from multiprocessing import context
 import warnings
 warnings.filterwarnings("ignore")  # Ẩn toàn bộ warning trong hệ thống
 
@@ -30,15 +31,14 @@ def ask(question: str) -> str:
 
     Luồng xử lý (giữ nguyên thứ tự như trước khi tách module, chỉ khác là
     mỗi bước giờ được ủy quyền cho đúng module chuyên trách):
-        a) RETRIEVE  : lấy context liên quan từ Qdrant           -> rag.py
+        a) RETRIEVE  : lấy context liên quan từ redis           -> rag.py
         b) MEMORY    : lưu câu hỏi gốc (không kèm context)       -> memory.py
         c) GENERATE  : gọi LLM, tự xử lý Tool Calling nếu cần    -> llm.py + tool_executor.py
         d) MEMORY    : lưu câu trả lời cuối cùng                 -> memory.py
     """
-    # a) RETRIEVE: lấy context liên quan nhất từ Qdrant
+    # a) RETRIEVE: lấy context liên quan nhất từ redis
     context = retrieve_context(question)
     augmented_input = memory.build_augmented_message(question, context)
-
     # b) Lưu câu hỏi GỐC (không kèm context) vào lịch sử - để lịch sử gọn,
     # tránh phình to / lặp lại context nhiều lần qua các lượt chat.
     memory.append_user_message(question)
@@ -49,11 +49,10 @@ def ask(question: str) -> str:
     # gọi tool (add_to_cart, checkout...), generate_with_tools() tự lo toàn
     # bộ vòng lặp thực thi tool và trả về câu trả lời cuối cùng.
     messages_for_llm = memory.build_llm_messages(augmented_input)
+    
     answer = generate_with_tools(llm, messages_for_llm)
-
     # d) Lưu câu trả lời CUỐI CÙNG (đã tổng hợp từ tool, nếu có) vào memory để nhớ cho lượt sau.
     memory.append_ai_message(answer)
-
     return answer
 
 
@@ -82,3 +81,4 @@ if __name__ == "__main__":
             break
         answer = ask(user_input)
         print(f"Ori: {answer}\n")
+        

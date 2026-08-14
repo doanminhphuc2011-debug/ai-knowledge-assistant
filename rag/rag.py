@@ -11,7 +11,8 @@ from __future__ import annotations
 
 from langchain_core.documents import Document
 
-from .retriever import SCORE_THRESHOLD, TOP_K, get_retriever
+from .hybrid_retriever import get_hybrid_retriever
+from .retriever import SCORE_THRESHOLD, TOP_K
 
 # Re-export để code cũ (nếu có) đang `from rag import SCORE_THRESHOLD/TOP_K`
 # vẫn import được - dù giá trị thật giờ được định nghĩa ở retriever.py.
@@ -30,17 +31,15 @@ def retrieve(query: str, top_k: int = TOP_K) -> dict:
                                          # retrieval metadata (vd. trong evaluate.py)
         }
 
-    LƯU Ý so với bản Qdrant thuần trước đây: việc lọc theo SCORE_THRESHOLD
-    giờ nằm NGAY TRONG retriever (search_type="similarity_score_threshold"),
-    nên "results" ở đây chỉ còn các chunk ĐÃ ĐẠT ngưỡng liên quan - khác với
-    trước kia "results" là TOÀN BỘ top_k thô (kể cả chunk bị loại). Đây là
-    hệ quả tất yếu khi việc lọc được giao cho retriever theo đúng cách làm
-    chuẩn của LangChain (yêu cầu dùng retriever.invoke() thay vì tự so sánh
-    điểm số bằng tay) - retriever.invoke() không trả kèm điểm số thô ra
-    ngoài nên không thể tách riêng "toàn bộ top_k" và "phần qua ngưỡng"
-    như trước nữa.
+    LƯU Ý: từ khi chuyển sang HybridRetriever (Dense + Sparse BM25 + RRF
+    Fusion, xem hybrid_retriever.py), việc lọc theo ngưỡng KHÔNG còn dùng
+    search_type="similarity_score_threshold" cố định 1 mức duy nhất nữa -
+    ngưỡng dense giờ ĐIỀU KIỆN theo việc BM25 có tìm được từ khóa khớp hay
+    không (xem giải thích chi tiết trong hybrid_retriever.py). "results" ở
+    đây vẫn chỉ gồm các chunk ĐÃ qua fusion + lọc, không phải toàn bộ top_k
+    thô - hành vi bên ngoài (shape của dict trả về) không đổi so với trước.
     """
-    documents: list[Document] = get_retriever(top_k=top_k).invoke(query)
+    documents: list[Document] = get_hybrid_retriever(top_k=top_k).invoke(query)
     context = "\n".join(f"- {doc.page_content}" for doc in documents)
     return {"context": context, "results": documents}
 

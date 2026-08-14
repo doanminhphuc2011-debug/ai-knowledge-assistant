@@ -1,0 +1,21 @@
+﻿Question,Expected Source,Retrieved Sources,Retriever Correct,Context Precision,Reciprocal Rank,False Positive (none case),Latency
+Cà phê muối giá bao nhiêu?,menu_item,"menu_item, menu_item, menu_item, menu_item, menu_item",True,1.0,1.0,,3.609
+Trà đào sả cam giá bao nhiêu tiền?,menu_item,"menu_item, menu_item, menu_item, menu_item, menu_item",True,1.0,1.0,,0.145
+Quán có bán trà sữa ô long nướng không?,menu_item,"menu_item, faq, faq, menu_item, menu_item",True,0.6,1.0,,0.164
+Bánh tiramisu giá bao nhiêu?,menu_item,"menu_item, menu_item, menu_item, menu_item, menu_item",True,1.0,1.0,,0.149
+Đá xay Caramel Coffee Freeze size L giá bao nhiêu?,menu_item,"menu_item, menu_item, menu_item, menu_item, menu_item",True,1.0,1.0,,0.166
+Bạc xỉu và cà phê sữa đá cái nào rẻ hơn?,menu_item,"menu_item, menu_item, promotion, menu_item, menu_item",True,0.8,1.0,,0.225
+Tôi có thể chọn mức đường khi gọi món không?,menu_option,"faq, menu_option, menu_option, menu_option, faq",True,0.6,0.5,,0.167
+Thêm topping trân châu đen thì tính thêm bao nhiêu tiền?,menu_option,"menu_option, menu_item, menu_item, menu_item, menu_item",True,0.2,1.0,,0.153
+Quán đang có chương trình khuyến mãi gì không?,promotion,"promotion, promotion, promotion, faq, promotion",True,0.8,1.0,,0.173
+Khung giờ vàng giảm giá áp dụng lúc mấy giờ?,promotion,"promotion, promotion, promotion, promotion, promotion",True,1.0,1.0,,0.165
+Thứ 3 có ưu đãi gì cho trà sữa không?,promotion,"promotion, faq, promotion, menu_item, promotion",True,0.6,1.0,,0.173
+Cách tích điểm thành viên của quán như thế nào?,promotion,"promotion, promotion, promotion, promotion, promotion",True,1.0,1.0,,0.158
+Hạng Kim Cương có những ưu đãi gì?,promotion,"promotion, promotion, promotion, menu_option, promotion",True,0.8,1.0,,0.155
+Quán mở cửa từ mấy giờ đến mấy giờ?,faq,"faq, faq, faq, faq, promotion",True,0.8,1.0,,0.162
+Quán có chỗ đậu xe ô tô không?,faq,"faq, faq, faq, faq, faq",True,1.0,1.0,,0.164
+Quán có phòng họp cho nhóm đông người không?,faq,"faq, faq, faq, faq, promotion",True,0.8,1.0,,0.181
+Quán có giao hàng tận nơi không?,faq,"faq, faq, faq, faq, faq",True,1.0,1.0,,0.149
+Người ăn chay có thể đổi sang sữa hạt không?,faq,"faq, menu_item, menu_item, menu_item, menu_item",True,0.2,1.0,,0.147
+Quán có bán bia hoặc rượu không?,none,"faq, faq, faq, faq, faq",False,,,True,0.145
+Quán có giảm giá riêng cho sinh viên không?,none,"promotion, faq, promotion, faq, faq",False,,,True,0.158

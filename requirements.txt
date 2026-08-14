@@ -5,4 +5,12 @@ langchain-ollama
 langchain-community
 langchain-redis
 python-dotenv
-fastembed
+fastembed 
+sounddevice
+soundfile
+numpy
+edge-tts
+faster-whisper
+python-dotenv
+rank-bm25
+unidecode

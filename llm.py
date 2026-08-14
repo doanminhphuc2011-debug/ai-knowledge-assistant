@@ -35,12 +35,12 @@ if not os.getenv("GROQ_API_KEY"):
 
 # KHỞI TẠO CÁC MODEL CHUỖI FALLBACK
 _llm_groq = ChatGroq(
-    model="openai/gpt-oss-20b",
+    model="llama-3.3-70b-versatile",
     api_key=os.getenv("GROQ_API_KEY"),
     temperature=0.7)
 
 _llm_gemini = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash",
+    model="gemini-flash-latest",
     google_api_key=os.getenv("GEMINI_API_KEY"),
     temperature=0.7)
 

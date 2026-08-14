@@ -14,7 +14,8 @@ cách xử lý 3 loại lỗi tool (unknown_tool / invalid_arguments /
 tool_execution_error), cùng câu trả lời fallback khi chạm giới hạn.
 """
 from __future__ import annotations
-from urllib import response
+
+from typing import Any
 
 from langchain_core.messages import AIMessage, BaseMessage, ToolMessage
 from langchain_core.runnables import Runnable
@@ -31,6 +32,36 @@ _FALLBACK_ANSWER = (
     "Xin lỗi, hiện tôi đang xử lý yêu cầu này chưa xong. "
     "Bạn vui lòng thử lại hoặc nói rõ hơn giúp tôi nhé."
 )
+
+
+def _extract_text(content: Any) -> str:
+    """Chuẩn hoá `AIMessage.content` về `str` thuần trước khi trả ra ngoài
+    cho người dùng/memory/evaluate.py.
+
+    TẠI SAO CẦN HÀM NÀY: `response.content` KHÔNG LUÔN LÀ str như type hint
+    của generate_with_tools() khai báo - đây là giả định ĐÚNG với Groq
+    (luôn trả content dạng str), nhưng SAI với Gemini
+    (`ChatGoogleGenerativeAI`) - khi with_fallbacks() rơi từ Groq xuống
+    Gemini, `response.content` có thể là `list[dict]` (nhiều content block,
+    vd. `[{"type": "text", "text": "..."}]`) thay vì string thuần. Nếu
+    không chuẩn hoá, người dùng cuối có nguy cơ nhận nguyên str() của cả
+    list (vd. "[{'type': 'text', 'text': '...'}]") thay vì câu trả lời tự
+    nhiên - đã tái hiện được lỗi này qua evaluate.py
+    (AttributeError: 'list' object has no attribute 'lower').
+
+    Xử lý cả 2 dạng block phổ biến: block là str thuần, hoặc block là dict
+    có field "text" (chuẩn content block của Gemini/Anthropic-style)."""
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        parts = []
+        for block in content:
+            if isinstance(block, str):
+                parts.append(block)
+            elif isinstance(block, dict):
+                parts.append(str(block.get("text", "")))
+        return "".join(parts)
+    return str(content)
 
 
 def _execute_tool_call(tool_call: dict) -> str:
@@ -86,6 +117,7 @@ def generate_with_tools(llm: Runnable, messages: list[BaseMessage]) -> str:
     Trả về: chuỗi câu trả lời cuối cùng cho khách (response.content), hoặc
     câu trả lời fallback an toàn nếu chạm giới hạn số vòng lặp.
     """
+
     response: AIMessage = llm.invoke(messages)
 
     iterations = 0
@@ -102,4 +134,4 @@ def generate_with_tools(llm: Runnable, messages: list[BaseMessage]) -> str:
         # và trả 1 câu xin lỗi an toàn thay vì lặp vô hạn hoặc trả rỗng.
         return _FALLBACK_ANSWER
 
-    return response.content
+    return _extract_text(response.content)
