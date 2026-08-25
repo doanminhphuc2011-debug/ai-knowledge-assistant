@@ -1,0 +1,10 @@
+# LLM Gateway
+LLM_GATEWAY_URL=http://localhost:4000/v1
+LLM_GATEWAY_MODEL=dmp-chat
+LITELLM_MASTER_KEY=<generate-a-private-gateway-key>
+
+# LiteLLM provider/model identifiers
+GATEWAY_GROQ_MODEL=groq/openai/gpt-oss-120b
+GATEWAY_GEMINI_MODEL=gemini/gemini-flash-latest
+GATEWAY_LOCAL_MODEL=ollama/qwen2.5:1.5b
+GATEWAY_LOCAL_API_BASE=http://localhost:11434

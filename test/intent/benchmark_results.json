@@ -1,0 +1,7000 @@
+{
+  "rule": {
+    "name": "Rule-based",
+    "cases": [
+      {
+        "text": "cho tôi 2 latte size M",
+        "gold": {
+          "product": "latte",
+          "size": "M",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "Latte",
+          "size": "M",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "latte",
+          "size": "M",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "latte",
+          "size": "M",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.4298999992897734
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "anh lấy giúp em một espresso",
+        "gold": {
+          "product": "espresso",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": null,
+          "size": null,
+          "quantity": null
+        },
+        "gold_normalized": {
+          "product": "espresso",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": null,
+          "quantity": null
+        },
+        "latencies_ms": [
+          0.24480000138282776
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": false
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing",
+          "QUANTITY missing"
+        ]
+      },
+      {
+        "text": "cho mình 3 matcha to",
+        "gold": {
+          "product": "matcha",
+          "size": "to",
+          "quantity": "3"
+        },
+        "pred": {
+          "product": null,
+          "size": "L",
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "matcha",
+          "size": "L",
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": "L",
+          "quantity": 3
+        },
+        "latencies_ms": [
+          0.1621000046725385
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "lấy giúp tôi 5 mocha size L",
+        "gold": {
+          "product": "mocha",
+          "size": "L",
+          "quantity": "5"
+        },
+        "pred": {
+          "product": null,
+          "size": "L",
+          "quantity": 5
+        },
+        "gold_normalized": {
+          "product": "mocha",
+          "size": "L",
+          "quantity": 5
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": "L",
+          "quantity": 5
+        },
+        "latencies_ms": [
+          0.1571000029798597
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "cho em một cappuccino nhé",
+        "gold": {
+          "product": "cappuccino",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "Cappuccino",
+          "size": null,
+          "quantity": null
+        },
+        "gold_normalized": {
+          "product": "cappuccino",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "cappuccino",
+          "size": null,
+          "quantity": null
+        },
+        "latencies_ms": [
+          0.20709999807877466
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": false
+        },
+        "full_match": false,
+        "errors": [
+          "QUANTITY missing"
+        ]
+      },
+      {
+        "text": "cho tôi 2 macchiato",
+        "gold": {
+          "product": "macchiato",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": null,
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "macchiato",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.1733999961288646
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "mình lấy giúp 1 americano size nhỏ",
+        "gold": {
+          "product": "americano",
+          "size": "nhỏ",
+          "quantity": "1"
+        },
+        "pred": {
+          "product": "Americano",
+          "size": "M",
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "americano",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "americano",
+          "size": "M",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          0.1967999996850267
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho em hai coldbrew size vừa",
+        "gold": {
+          "product": "coldbrew",
+          "size": "vừa",
+          "quantity": "hai"
+        },
+        "pred": {
+          "product": null,
+          "size": "M",
+          "quantity": null
+        },
+        "gold_normalized": {
+          "product": "coldbrew",
+          "size": "M",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": "M",
+          "quantity": null
+        },
+        "latencies_ms": [
+          0.1536999989184551
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": false
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing",
+          "QUANTITY missing"
+        ]
+      },
+      {
+        "text": "lấy 3 frappe",
+        "gold": {
+          "product": "frappe",
+          "size": null,
+          "quantity": "3"
+        },
+        "pred": {
+          "product": null,
+          "size": null,
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "frappe",
+          "size": null,
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": null,
+          "quantity": 3
+        },
+        "latencies_ms": [
+          0.1365000061923638
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "cho tôi một espresso lớn",
+        "gold": {
+          "product": "espresso",
+          "size": "lớn",
+          "quantity": "một"
+        },
+        "pred": {
+          "product": null,
+          "size": "L",
+          "quantity": null
+        },
+        "gold_normalized": {
+          "product": "espresso",
+          "size": "L",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": "L",
+          "quantity": null
+        },
+        "latencies_ms": [
+          0.14699999883305281
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": false
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing",
+          "QUANTITY missing"
+        ]
+      },
+      {
+        "text": "mình lấy 2 latte nhỏ",
+        "gold": {
+          "product": "latte",
+          "size": "nhỏ",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "Latte",
+          "size": "M",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "latte",
+          "size": "M",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "latte",
+          "size": "M",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.18200000340584666
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "anh ơi cho em 4 mocha nhé",
+        "gold": {
+          "product": "mocha",
+          "size": null,
+          "quantity": "4"
+        },
+        "pred": {
+          "product": null,
+          "size": null,
+          "quantity": 4
+        },
+        "gold_normalized": {
+          "product": "mocha",
+          "size": null,
+          "quantity": 4
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": null,
+          "quantity": 4
+        },
+        "latencies_ms": [
+          0.14899999951012433
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "giúp em một cappuccino size M",
+        "gold": {
+          "product": "cappuccino",
+          "size": "M",
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "Cappuccino",
+          "size": "M",
+          "quantity": null
+        },
+        "gold_normalized": {
+          "product": "cappuccino",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "cappuccino",
+          "size": "M",
+          "quantity": null
+        },
+        "latencies_ms": [
+          0.1871999993454665
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": false
+        },
+        "full_match": false,
+        "errors": [
+          "QUANTITY missing"
+        ]
+      },
+      {
+        "text": "cho tôi 2 matcha đá",
+        "gold": {
+          "product": "matcha",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": null,
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "matcha",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.14110000483924523
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "lấy giúp 5 americano",
+        "gold": {
+          "product": "americano",
+          "size": null,
+          "quantity": "5"
+        },
+        "pred": {
+          "product": "Americano",
+          "size": null,
+          "quantity": 5
+        },
+        "gold_normalized": {
+          "product": "americano",
+          "size": null,
+          "quantity": 5
+        },
+        "pred_normalized": {
+          "product": "americano",
+          "size": null,
+          "quantity": 5
+        },
+        "latencies_ms": [
+          0.13889999536331743
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi 2 ly bạc xỉu size lớn",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "lớn",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": "L",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "L",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": "L",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.17889999435283244
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "anh lấy giúp em 3 bạc xỉu nha",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "3"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": null,
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 3
+        },
+        "latencies_ms": [
+          0.15839999832678586
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "em lấy một bạc xỉu",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": null,
+          "quantity": null
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": null
+        },
+        "latencies_ms": [
+          0.14480000390904024
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": false
+        },
+        "full_match": false,
+        "errors": [
+          "QUANTITY missing"
+        ]
+      },
+      {
+        "text": "cho mình 2 bạc xỉu size L",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "L",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": "L",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "L",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": "L",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.1723000023048371
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho em một cà phê sữa đá size M",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": "M",
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "Cà Phê Sữa Đá",
+          "size": "M",
+          "quantity": null
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "caphesuada",
+          "size": "M",
+          "quantity": null
+        },
+        "latencies_ms": [
+          0.1849999971454963
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": false
+        },
+        "full_match": false,
+        "errors": [
+          "QUANTITY missing"
+        ]
+      },
+      {
+        "text": "cho em mot ly ca phe sua da size M",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": "M",
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "Cà Phê Sữa Đá",
+          "size": "M",
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "caphesuada",
+          "size": "M",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          0.16689999756636098
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "lấy 2 cà phê sữa đá",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "Cà Phê Sữa Đá",
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.14170000213198364
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho mình 3 ly cà phê sữa đá",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": null,
+          "quantity": "3"
+        },
+        "pred": {
+          "product": "Cà Phê Sữa Đá",
+          "size": null,
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 3
+        },
+        "latencies_ms": [
+          0.1514999967184849
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi một trà đào sả cam size vừa",
+        "gold": {
+          "product": "trà đào sả cam",
+          "size": "vừa",
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "Trà Đào Sả Cam",
+          "size": "M",
+          "quantity": null
+        },
+        "gold_normalized": {
+          "product": "tradaosacam",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "tradaosacam",
+          "size": "M",
+          "quantity": null
+        },
+        "latencies_ms": [
+          0.18310000450583175
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": false
+        },
+        "full_match": false,
+        "errors": [
+          "QUANTITY missing"
+        ]
+      },
+      {
+        "text": "lấy giúp em 2 trà sữa trân châu size nhỏ",
+        "gold": {
+          "product": "trà sữa trân châu",
+          "size": "nhỏ",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": null,
+          "size": "M",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "trasuatranchau",
+          "size": "M",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": "M",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.15210000128718093
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "cho tôi 3 ly cà phê muối lớn",
+        "gold": {
+          "product": "cà phê muối",
+          "size": "lớn",
+          "quantity": "3"
+        },
+        "pred": {
+          "product": "Cà Phê Muối",
+          "size": "L",
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "caphemuoi",
+          "size": "L",
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": "caphemuoi",
+          "size": "L",
+          "quantity": 3
+        },
+        "latencies_ms": [
+          0.16909999976633117
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "em ơi cho mình 1 ly trà xanh mật ong",
+        "gold": {
+          "product": "trà xanh mật ong",
+          "size": null,
+          "quantity": "1"
+        },
+        "pred": {
+          "product": null,
+          "size": null,
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "traxanhmatong",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          0.15500000154133886
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "cho tôi 2 ly trà ô long sữa size M",
+        "gold": {
+          "product": "trà ô long sữa",
+          "size": "M",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": null,
+          "size": "M",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "traolongsua",
+          "size": "M",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": "M",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.14309999824035913
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "lấy 4 ly sữa tươi trân châu đường đen",
+        "gold": {
+          "product": "sữa tươi trân châu đường đen",
+          "size": null,
+          "quantity": "4"
+        },
+        "pred": {
+          "product": "Sữa Tươi Trân Châu Đường Đen",
+          "size": null,
+          "quantity": 4
+        },
+        "gold_normalized": {
+          "product": "suatuoitranchauduongden",
+          "size": null,
+          "quantity": 4
+        },
+        "pred_normalized": {
+          "product": "suatuoitranchauduongden",
+          "size": null,
+          "quantity": 4
+        },
+        "latencies_ms": [
+          0.16110000433400273
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho em 2 ly hồng trà sữa",
+        "gold": {
+          "product": "hồng trà sữa",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": null,
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "hongtrasua",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.1444000008632429
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "anh lấy một bạc xỉu đá",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": null,
+          "quantity": null
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": null
+        },
+        "latencies_ms": [
+          0.14620000001741573
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": false
+        },
+        "full_match": false,
+        "errors": [
+          "QUANTITY missing"
+        ]
+      },
+      {
+        "text": "cho mình 2 cà phê đường đen",
+        "gold": {
+          "product": "cà phê đường đen",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": null,
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "capheduongden",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.1464000015403144
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "lấy giúp 3 ly trà vải hoa nhài",
+        "gold": {
+          "product": "trà vải hoa nhài",
+          "size": null,
+          "quantity": "3"
+        },
+        "pred": {
+          "product": null,
+          "size": null,
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "travaihoanhai",
+          "size": null,
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": null,
+          "quantity": 3
+        },
+        "latencies_ms": [
+          0.14799999917158857
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "cho em một ly trà chanh sả",
+        "gold": {
+          "product": "trà chanh sả",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": null,
+          "size": null,
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "trachanhsa",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          0.148899998748675
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "cho tôi một ly sinh tố bơ size nhỏ",
+        "gold": {
+          "product": "sinh tố bơ",
+          "size": "nhỏ",
+          "quantity": "một"
+        },
+        "pred": {
+          "product": null,
+          "size": "M",
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "sinhtobo",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": "M",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          0.1472000003559515
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "cho tôi 2 ly bạc xỉu",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.14340000052470714
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi 2 bạc xỉu",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.13919999764766544
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "lấy giúp em một ly cà phê sữa đá",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "Cà Phê Sữa Đá",
+          "size": null,
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          0.152900000102818
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "lấy cho em một cà phê sữa đá",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "Cà Phê Sữa Đá",
+          "size": null,
+          "quantity": null
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": null
+        },
+        "latencies_ms": [
+          0.15529999654972926
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": false
+        },
+        "full_match": false,
+        "errors": [
+          "QUANTITY missing"
+        ]
+      },
+      {
+        "text": "cho mình 3 ly trà sữa trân châu",
+        "gold": {
+          "product": "trà sữa trân châu",
+          "size": null,
+          "quantity": "3"
+        },
+        "pred": {
+          "product": null,
+          "size": null,
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "trasuatranchau",
+          "size": null,
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": null,
+          "quantity": 3
+        },
+        "latencies_ms": [
+          0.1520000005257316
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "cho mình 3 trà sữa trân châu",
+        "gold": {
+          "product": "trà sữa trân châu",
+          "size": null,
+          "quantity": "3"
+        },
+        "pred": {
+          "product": null,
+          "size": null,
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "trasuatranchau",
+          "size": null,
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": null,
+          "quantity": 3
+        },
+        "latencies_ms": [
+          0.16190000314963982
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "anh ơi lấy 2 ly bạc xỉu size M",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "M",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": "M",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "M",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": "M",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.17840000509750098
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "anh ơi lấy 2 bạc xỉu đi",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.14850000297883525
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho em hai ly trà đào sả cam",
+        "gold": {
+          "product": "trà đào sả cam",
+          "size": null,
+          "quantity": "hai"
+        },
+        "pred": {
+          "product": "Trà Đào Sả Cam",
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "tradaosacam",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "tradaosacam",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.15259999781847
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho em hai trà đào sả cam",
+        "gold": {
+          "product": "trà đào sả cam",
+          "size": null,
+          "quantity": "hai"
+        },
+        "pred": {
+          "product": "Trà Đào Sả Cam",
+          "size": null,
+          "quantity": null
+        },
+        "gold_normalized": {
+          "product": "tradaosacam",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "tradaosacam",
+          "size": null,
+          "quantity": null
+        },
+        "latencies_ms": [
+          0.15809999604243785
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": false
+        },
+        "full_match": false,
+        "errors": [
+          "QUANTITY missing"
+        ]
+      },
+      {
+        "text": "cho tôi 1 ly bạc xỉu size M",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "M",
+          "quantity": "1"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": "M",
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": "M",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          0.17659999866737053
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi 1 ly bạc xỉu size L",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "L",
+          "quantity": "1"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": "L",
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "L",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": "L",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          0.19040000188397244
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi 1 ly bạc xỉu size lớn",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "lớn",
+          "quantity": "1"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": "L",
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "L",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": "L",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          0.17619999562157318
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi 1 ly bạc xỉu size nhỏ",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "nhỏ",
+          "quantity": "1"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": "M",
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": "M",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          0.1771000024746172
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi 1 ly bạc xỉu size vừa",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "vừa",
+          "quantity": "1"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": "M",
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": "M",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          0.17660000594332814
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi 1 ly bạc xỉu lớn",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "lớn",
+          "quantity": "1"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": "L",
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "L",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": "L",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          0.19189999875379726
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi 1 ly bạc xỉu nhỏ",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "nhỏ",
+          "quantity": "1"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": "M",
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": "M",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          0.17410000145900995
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "lấy 2 cà phê sữa đá to",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": "to",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "Cà Phê Sữa Đá",
+          "size": "L",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": "L",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "caphesuada",
+          "size": "L",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.1790000023902394
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "lấy 2 cà phê sữa đá vừa",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": "vừa",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "Cà Phê Sữa Đá",
+          "size": "M",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": "M",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "caphesuada",
+          "size": "M",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.17890000162879005
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "lấy 2 cà phê sữa đá nhỏ",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": "nhỏ",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "Cà Phê Sữa Đá",
+          "size": "M",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": "M",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "caphesuada",
+          "size": "M",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.17610000213608146
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho em 3 trà sữa size M",
+        "gold": {
+          "product": "trà sữa",
+          "size": "M",
+          "quantity": "3"
+        },
+        "pred": {
+          "product": null,
+          "size": "M",
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "trasua",
+          "size": "M",
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": "M",
+          "quantity": 3
+        },
+        "latencies_ms": [
+          0.14770000416319817
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "cho em 3 trà sữa size L",
+        "gold": {
+          "product": "trà sữa",
+          "size": "L",
+          "quantity": "3"
+        },
+        "pred": {
+          "product": null,
+          "size": "L",
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "trasua",
+          "size": "L",
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": "L",
+          "quantity": 3
+        },
+        "latencies_ms": [
+          0.14630000077886507
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "cho em 2 sinh tố bơ size vừa",
+        "gold": {
+          "product": "sinh tố bơ",
+          "size": "vừa",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": null,
+          "size": "M",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "sinhtobo",
+          "size": "M",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": "M",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.1472000003559515
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "lấy một ly matcha size nhỏ",
+        "gold": {
+          "product": "matcha",
+          "size": "nhỏ",
+          "quantity": "một"
+        },
+        "pred": {
+          "product": null,
+          "size": "M",
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "matcha",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": "M",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          0.14830000145593658
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "cho tôi 2 latte size to",
+        "gold": {
+          "product": "latte",
+          "size": "to",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "Latte",
+          "size": "L",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "latte",
+          "size": "L",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "latte",
+          "size": "L",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.17300000035902485
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi một ly bạc xỉu",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": null,
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          0.16899999900488183
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi hai bạc xỉu",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "hai"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": null,
+          "quantity": null
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": null
+        },
+        "latencies_ms": [
+          0.15210000128718093
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": false
+        },
+        "full_match": false,
+        "errors": [
+          "QUANTITY missing"
+        ]
+      },
+      {
+        "text": "lấy giúp em 3 ly trà sữa",
+        "gold": {
+          "product": "trà sữa",
+          "size": null,
+          "quantity": "3"
+        },
+        "pred": {
+          "product": null,
+          "size": null,
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "trasua",
+          "size": null,
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": null,
+          "quantity": 3
+        },
+        "latencies_ms": [
+          0.15010000061010942
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "lấy giúp em ba ly trà sữa",
+        "gold": {
+          "product": "trà sữa",
+          "size": null,
+          "quantity": "ba"
+        },
+        "pred": {
+          "product": null,
+          "size": null,
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "trasua",
+          "size": null,
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": null,
+          "quantity": 3
+        },
+        "latencies_ms": [
+          0.1581999968038872
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "cho em năm ly cà phê muối",
+        "gold": {
+          "product": "cà phê muối",
+          "size": null,
+          "quantity": "năm"
+        },
+        "pred": {
+          "product": "Cà Phê Muối",
+          "size": null,
+          "quantity": 5
+        },
+        "gold_normalized": {
+          "product": "caphemuoi",
+          "size": null,
+          "quantity": 5
+        },
+        "pred_normalized": {
+          "product": "caphemuoi",
+          "size": null,
+          "quantity": 5
+        },
+        "latencies_ms": [
+          0.15750000602565706
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho mình tám ly matcha",
+        "gold": {
+          "product": "matcha",
+          "size": null,
+          "quantity": "tám"
+        },
+        "pred": {
+          "product": null,
+          "size": null,
+          "quantity": 8
+        },
+        "gold_normalized": {
+          "product": "matcha",
+          "size": null,
+          "quantity": 8
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": null,
+          "quantity": 8
+        },
+        "latencies_ms": [
+          0.1500999933341518
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "anh ơi cho tôi 10 ly latte",
+        "gold": {
+          "product": "latte",
+          "size": null,
+          "quantity": "10"
+        },
+        "pred": {
+          "product": "Latte",
+          "size": null,
+          "quantity": 10
+        },
+        "gold_normalized": {
+          "product": "latte",
+          "size": null,
+          "quantity": 10
+        },
+        "pred_normalized": {
+          "product": "latte",
+          "size": null,
+          "quantity": 10
+        },
+        "latencies_ms": [
+          0.15040000289445743
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho em một ly trà chanh",
+        "gold": {
+          "product": "trà chanh",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": null,
+          "size": null,
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "trachanh",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          0.14879999798722565
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "mình lấy giúp 2 sinh tố bơ",
+        "gold": {
+          "product": "sinh tố bơ",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": null,
+          "size": "L",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "sinhtobo",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": "L",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.14179999561747536
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": false,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "cho mình lấy 4 ly hồng trà sữa",
+        "gold": {
+          "product": "hồng trà sữa",
+          "size": null,
+          "quantity": "4"
+        },
+        "pred": {
+          "product": null,
+          "size": null,
+          "quantity": 4
+        },
+        "gold_normalized": {
+          "product": "hongtrasua",
+          "size": null,
+          "quantity": 4
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": null,
+          "quantity": 4
+        },
+        "latencies_ms": [
+          0.15439999697264284
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "lấy cho em một bac xiu nhỏ di",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "nhỏ",
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": "M",
+          "quantity": null
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": "M",
+          "quantity": null
+        },
+        "latencies_ms": [
+          0.19159999646944925
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": false
+        },
+        "full_match": false,
+        "errors": [
+          "QUANTITY missing"
+        ]
+      },
+      {
+        "text": "cho em hai ly bạc xỉu nha",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "hai"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.1548000000184402
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho em một ly cà phê muối nhé",
+        "gold": {
+          "product": "cà phê muối",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "Cà Phê Muối",
+          "size": null,
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "caphemuoi",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "caphemuoi",
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          0.15770000027259812
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "lấy giúp em 5 sữa tươi trân châu đường đen",
+        "gold": {
+          "product": "sữa tươi trân châu đường đen",
+          "size": null,
+          "quantity": "5"
+        },
+        "pred": {
+          "product": "Sữa Tươi Trân Châu Đường Đen",
+          "size": null,
+          "quantity": 5
+        },
+        "gold_normalized": {
+          "product": "suatuoitranchauduongden",
+          "size": null,
+          "quantity": 5
+        },
+        "pred_normalized": {
+          "product": "suatuoitranchauduongden",
+          "size": null,
+          "quantity": 5
+        },
+        "latencies_ms": [
+          0.17189999925903976
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi 3 ly trà ô long sữa",
+        "gold": {
+          "product": "trà ô long sữa",
+          "size": null,
+          "quantity": "3"
+        },
+        "pred": {
+          "product": null,
+          "size": null,
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "traolongsua",
+          "size": null,
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": null,
+          "quantity": 3
+        },
+        "latencies_ms": [
+          0.1548000000184402
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "cho toi 2 ly bac xiu size lon",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "lớn",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": "L",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "L",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": "L",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.17490000027464703
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho em mot ly ca phe sua da",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "Cà Phê Sữa Đá",
+          "size": null,
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          0.15320000238716602
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "ca phe sua da cho em 2",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "Cà Phê Sữa Đá",
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.1503000021330081
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "tra dao sa cam 1 ly",
+        "gold": {
+          "product": "trà đào sả cam",
+          "size": null,
+          "quantity": "1"
+        },
+        "pred": {
+          "product": "Trà Đào Sả Cam",
+          "size": null,
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "tradaosacam",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "tradaosacam",
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          0.152900000102818
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "ca phe muoi size M",
+        "gold": {
+          "product": "cà phê muối",
+          "size": "M",
+          "quantity": null
+        },
+        "pred": {
+          "product": "Cà Phê Muối",
+          "size": "M",
+          "quantity": null
+        },
+        "gold_normalized": {
+          "product": "caphemuoi",
+          "size": "M",
+          "quantity": null
+        },
+        "pred_normalized": {
+          "product": "caphemuoi",
+          "size": "M",
+          "quantity": null
+        },
+        "latencies_ms": [
+          0.1857999959611334
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho em 2 ly tra sua tran chau",
+        "gold": {
+          "product": "trà sữa trân châu",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": null,
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "trasuatranchau",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.15940000594127923
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "CHO EM 1 LY BAC XIU",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "1"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": null,
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          0.1571000029798597
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "Cho em mot ly bac xiu",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": null,
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          0.15269999857991934
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "ca phe sua da size lon",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": "lớn",
+          "quantity": null
+        },
+        "pred": {
+          "product": "Cà Phê Sữa Đá",
+          "size": "L",
+          "quantity": null
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": "L",
+          "quantity": null
+        },
+        "pred_normalized": {
+          "product": "caphesuada",
+          "size": "L",
+          "quantity": null
+        },
+        "latencies_ms": [
+          0.18289999570697546
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho toi 3 tra sua",
+        "gold": {
+          "product": "trà sữa",
+          "size": null,
+          "quantity": "3"
+        },
+        "pred": {
+          "product": null,
+          "size": null,
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "trasua",
+          "size": null,
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": null,
+          "quantity": 3
+        },
+        "latencies_ms": [
+          0.1453000004403293
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "anh lấy giúp em 2 ly bạc xỉu nha",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.16489999688928947
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho mình một cà phê sữa đá đi",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "Cà Phê Sữa Đá",
+          "size": null,
+          "quantity": null
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": null
+        },
+        "latencies_ms": [
+          0.17130000196630135
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": false
+        },
+        "full_match": false,
+        "errors": [
+          "QUANTITY missing"
+        ]
+      },
+      {
+        "text": "em lấy giúp 3 trà đào sả cam nhé",
+        "gold": {
+          "product": "trà đào sả cam",
+          "size": null,
+          "quantity": "3"
+        },
+        "pred": {
+          "product": "Trà Đào Sả Cam",
+          "size": null,
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "tradaosacam",
+          "size": null,
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": "tradaosacam",
+          "size": null,
+          "quantity": 3
+        },
+        "latencies_ms": [
+          0.17780000052880496
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "anh ơi cho em 2 ly matcha đi",
+        "gold": {
+          "product": "matcha",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": null,
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "matcha",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.16730000061215833
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "cho em một ly trà chanh sả nhé",
+        "gold": {
+          "product": "trà chanh sả",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": null,
+          "size": null,
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "trachanhsa",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          0.1660999987507239
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "lấy giúp tôi 2 bạc xỉu đi",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.16009999671950936
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho quán 3 ly cà phê sữa đá",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": null,
+          "quantity": "3"
+        },
+        "pred": {
+          "product": "Cà Phê Sữa Đá",
+          "size": null,
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 3
+        },
+        "latencies_ms": [
+          0.16260000120382756
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "mình lấy giúp 2 ly trà sữa nhé",
+        "gold": {
+          "product": "trà sữa",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": null,
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "trasua",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.16340000001946464
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "cho em 1 ly cà phê muối giúp em",
+        "gold": {
+          "product": "cà phê muối",
+          "size": null,
+          "quantity": "1"
+        },
+        "pred": {
+          "product": "Cà Phê Muối",
+          "size": null,
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "caphemuoi",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "caphemuoi",
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          0.16649999452056363
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "anh ơi lấy giúp 4 sinh tố bơ nha",
+        "gold": {
+          "product": "sinh tố bơ",
+          "size": null,
+          "quantity": "4"
+        },
+        "pred": {
+          "product": null,
+          "size": "L",
+          "quantity": 4
+        },
+        "gold_normalized": {
+          "product": "sinhtobo",
+          "size": null,
+          "quantity": 4
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": "L",
+          "quantity": 4
+        },
+        "latencies_ms": [
+          0.15349999739555642
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": false,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "cho tôi 2 bạc xỉu size lớn đá ít",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "lớn",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": "L",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "L",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": "L",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.19079999765381217
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "size M cho em một cà phê sữa đá",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": "M",
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "Cà Phê Sữa Đá",
+          "size": "M",
+          "quantity": null
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "caphesuada",
+          "size": "M",
+          "quantity": null
+        },
+        "latencies_ms": [
+          0.21740000374848023
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": false
+        },
+        "full_match": false,
+        "errors": [
+          "QUANTITY missing"
+        ]
+      },
+      {
+        "text": "em muốn một ly bạc xiu sizeM",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "M",
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "Bạc Xỉu",
+          "size": "M",
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": "M",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          0.18930000078398734
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho em một ly trà sữa trân châu, không đường, size lớn",
+        "gold": {
+          "product": "trà sữa trân châu",
+          "size": "lớn",
+          "quantity": "một"
+        },
+        "pred": {
+          "product": null,
+          "size": "L",
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "trasuatranchau",
+          "size": "L",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": "L",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          0.18909999926108867
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "lấy giúp 2 ca phe sua da nhe",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "Cà Phê Sữa Đá",
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          0.16699999832781032
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      }
+    ]
+  },
+  "phobert": {
+    "name": "PhoBERT",
+    "cases": [
+      {
+        "text": "cho tôi 2 latte size M",
+        "gold": {
+          "product": "latte",
+          "size": "M",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "te",
+          "size": "M",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "latte",
+          "size": "M",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "te",
+          "size": "M",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          78.39410000451608
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial"
+        ]
+      },
+      {
+        "text": "anh lấy giúp em một espresso",
+        "gold": {
+          "product": "espresso",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "espresso",
+          "size": null,
+          "quantity": "một"
+        },
+        "gold_normalized": {
+          "product": "espresso",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "espresso",
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          20.051399995281827
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho mình 3 matcha to",
+        "gold": {
+          "product": "matcha",
+          "size": "to",
+          "quantity": "3"
+        },
+        "pred": {
+          "product": "mat@@",
+          "size": "to",
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "matcha",
+          "size": "L",
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": "mat@@",
+          "size": "L",
+          "quantity": 3
+        },
+        "latencies_ms": [
+          20.13489999808371
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT wrong"
+        ]
+      },
+      {
+        "text": "lấy giúp tôi 5 mocha size L",
+        "gold": {
+          "product": "mocha",
+          "size": "L",
+          "quantity": "5"
+        },
+        "pred": {
+          "product": "mo@@",
+          "size": "L",
+          "quantity": 5
+        },
+        "gold_normalized": {
+          "product": "mocha",
+          "size": "L",
+          "quantity": 5
+        },
+        "pred_normalized": {
+          "product": "mo@@",
+          "size": "L",
+          "quantity": 5
+        },
+        "latencies_ms": [
+          20.044500000949483
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT wrong"
+        ]
+      },
+      {
+        "text": "cho em một cappuccino nhé",
+        "gold": {
+          "product": "cappuccino",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "cappuccino",
+          "size": null,
+          "quantity": "một"
+        },
+        "gold_normalized": {
+          "product": "cappuccino",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "cappuccino",
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          19.584599998779595
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi 2 macchiato",
+        "gold": {
+          "product": "macchiato",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "macchiato",
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "macchiato",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "macchiato",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          21.07619999878807
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "mình lấy giúp 1 americano size nhỏ",
+        "gold": {
+          "product": "americano",
+          "size": "nhỏ",
+          "quantity": "1"
+        },
+        "pred": {
+          "product": "americ@@",
+          "size": "nhỏ",
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "americano",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "americ@@",
+          "size": "M",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          17.026900000928435
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT wrong"
+        ]
+      },
+      {
+        "text": "cho em hai coldbrew size vừa",
+        "gold": {
+          "product": "coldbrew",
+          "size": "vừa",
+          "quantity": "hai"
+        },
+        "pred": {
+          "product": "coldbrew",
+          "size": "vừa",
+          "quantity": "hai"
+        },
+        "gold_normalized": {
+          "product": "coldbrew",
+          "size": "M",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "coldbrew",
+          "size": "M",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          17.17330000246875
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "lấy 3 frappe",
+        "gold": {
+          "product": "frappe",
+          "size": null,
+          "quantity": "3"
+        },
+        "pred": {
+          "product": "fra@@",
+          "size": null,
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "frappe",
+          "size": null,
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": "fra@@",
+          "size": null,
+          "quantity": 3
+        },
+        "latencies_ms": [
+          15.239899999869522
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT wrong"
+        ]
+      },
+      {
+        "text": "cho tôi một espresso lớn",
+        "gold": {
+          "product": "espresso",
+          "size": "lớn",
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "espresso",
+          "size": "lớn",
+          "quantity": "một"
+        },
+        "gold_normalized": {
+          "product": "espresso",
+          "size": "L",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "espresso",
+          "size": "L",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          15.306499997677747
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "mình lấy 2 latte nhỏ",
+        "gold": {
+          "product": "latte",
+          "size": "nhỏ",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "lat@@",
+          "size": "nhỏ",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "latte",
+          "size": "M",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "lat@@",
+          "size": "M",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          15.490400000999216
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT wrong"
+        ]
+      },
+      {
+        "text": "anh ơi cho em 4 mocha nhé",
+        "gold": {
+          "product": "mocha",
+          "size": null,
+          "quantity": "4"
+        },
+        "pred": {
+          "product": "cha",
+          "size": null,
+          "quantity": 4
+        },
+        "gold_normalized": {
+          "product": "mocha",
+          "size": null,
+          "quantity": 4
+        },
+        "pred_normalized": {
+          "product": "cha",
+          "size": null,
+          "quantity": 4
+        },
+        "latencies_ms": [
+          16.720100000384264
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial"
+        ]
+      },
+      {
+        "text": "giúp em một cappuccino size M",
+        "gold": {
+          "product": "cappuccino",
+          "size": "M",
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "cappuccino",
+          "size": "M",
+          "quantity": "một"
+        },
+        "gold_normalized": {
+          "product": "cappuccino",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "cappuccino",
+          "size": "M",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          17.673700000159442
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi 2 matcha đá",
+        "gold": {
+          "product": "matcha",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "mat@@",
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "matcha",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "mat@@",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          17.227899996214546
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT wrong"
+        ]
+      },
+      {
+        "text": "lấy giúp 5 americano",
+        "gold": {
+          "product": "americano",
+          "size": null,
+          "quantity": "5"
+        },
+        "pred": {
+          "product": "americ@@",
+          "size": null,
+          "quantity": 5
+        },
+        "gold_normalized": {
+          "product": "americano",
+          "size": null,
+          "quantity": 5
+        },
+        "pred_normalized": {
+          "product": "americ@@",
+          "size": null,
+          "quantity": 5
+        },
+        "latencies_ms": [
+          16.67259999521775
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT wrong"
+        ]
+      },
+      {
+        "text": "cho tôi 2 ly bạc xỉu size lớn",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "lớn",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "bạc xỉu",
+          "size": "lớn",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "L",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": "L",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          16.752800001995638
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "anh lấy giúp em 3 bạc xỉu nha",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "3"
+        },
+        "pred": {
+          "product": "xỉu",
+          "size": null,
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": "xiu",
+          "size": null,
+          "quantity": 3
+        },
+        "latencies_ms": [
+          17.609300004551187
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial"
+        ]
+      },
+      {
+        "text": "em lấy một bạc xỉu",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "xỉu",
+          "size": null,
+          "quantity": "một"
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "xiu",
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          16.276200003630947
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial"
+        ]
+      },
+      {
+        "text": "cho mình 2 bạc xỉu size L",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "L",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "bạc",
+          "size": "L",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "L",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "bac",
+          "size": "L",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          15.69529999687802
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial"
+        ]
+      },
+      {
+        "text": "cho em một cà phê sữa đá size M",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": "M",
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "cà phê sữa đá",
+          "size": "M",
+          "quantity": "một"
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "caphesuada",
+          "size": "M",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          17.326799999864306
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho em mot ly ca phe sua da size M",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": "M",
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "ca phe sua da",
+          "size": "M",
+          "quantity": "mo@@"
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "caphesuada",
+          "size": "M",
+          "quantity": null
+        },
+        "latencies_ms": [
+          18.90030000504339
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": false
+        },
+        "full_match": false,
+        "errors": [
+          "QUANTITY missing"
+        ]
+      },
+      {
+        "text": "lấy 2 cà phê sữa đá",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "cà phê sữa đá",
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          16.441200001281686
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho mình 3 ly cà phê sữa đá",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": null,
+          "quantity": "3"
+        },
+        "pred": {
+          "product": "cà phê sữa đá",
+          "size": null,
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 3
+        },
+        "latencies_ms": [
+          16.56100000400329
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi một trà đào sả cam size vừa",
+        "gold": {
+          "product": "trà đào sả cam",
+          "size": "vừa",
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "trà",
+          "size": "vừa",
+          "quantity": "một"
+        },
+        "gold_normalized": {
+          "product": "tradaosacam",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "tra",
+          "size": "M",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          19.359499994607177
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial"
+        ]
+      },
+      {
+        "text": "lấy giúp em 2 trà sữa trân châu size nhỏ",
+        "gold": {
+          "product": "trà sữa trân châu",
+          "size": "nhỏ",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "trà sữa trân châu",
+          "size": "nhỏ",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "trasuatranchau",
+          "size": "M",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "trasuatranchau",
+          "size": "M",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          20.283199999539647
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi 3 ly cà phê muối lớn",
+        "gold": {
+          "product": "cà phê muối",
+          "size": "lớn",
+          "quantity": "3"
+        },
+        "pred": {
+          "product": "cà phê muối",
+          "size": "lớn",
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "caphemuoi",
+          "size": "L",
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": "caphemuoi",
+          "size": "L",
+          "quantity": 3
+        },
+        "latencies_ms": [
+          20.909799997752998
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "em ơi cho mình 1 ly trà xanh mật ong",
+        "gold": {
+          "product": "trà xanh mật ong",
+          "size": null,
+          "quantity": "1"
+        },
+        "pred": {
+          "product": "trà xanh mật ong",
+          "size": null,
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "traxanhmatong",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "traxanhmatong",
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          21.00679999421118
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi 2 ly trà ô long sữa size M",
+        "gold": {
+          "product": "trà ô long sữa",
+          "size": "M",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "trà ô long sữa",
+          "size": "M",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "traolongsua",
+          "size": "M",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "traolongsua",
+          "size": "M",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          21.549999997660052
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "lấy 4 ly sữa tươi trân châu đường đen",
+        "gold": {
+          "product": "sữa tươi trân châu đường đen",
+          "size": null,
+          "quantity": "4"
+        },
+        "pred": {
+          "product": "sữa tươi trân châu đường đen",
+          "size": null,
+          "quantity": 4
+        },
+        "gold_normalized": {
+          "product": "suatuoitranchauduongden",
+          "size": null,
+          "quantity": 4
+        },
+        "pred_normalized": {
+          "product": "suatuoitranchauduongden",
+          "size": null,
+          "quantity": 4
+        },
+        "latencies_ms": [
+          17.317300000286195
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho em 2 ly hồng trà sữa",
+        "gold": {
+          "product": "hồng trà sữa",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "hồng trà sữa",
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "hongtrasua",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "hongtrasua",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          16.95589999872027
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "anh lấy một bạc xỉu đá",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "xỉu đá",
+          "size": null,
+          "quantity": "một"
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "xiuda",
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          15.90810000197962
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT wrong"
+        ]
+      },
+      {
+        "text": "cho mình 2 cà phê đường đen",
+        "gold": {
+          "product": "cà phê đường đen",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "cà phê đường đen",
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "capheduongden",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "capheduongden",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          16.43109999713488
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "lấy giúp 3 ly trà vải hoa nhài",
+        "gold": {
+          "product": "trà vải hoa nhài",
+          "size": null,
+          "quantity": "3"
+        },
+        "pred": {
+          "product": "trà vải hoa nhài",
+          "size": null,
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "travaihoanhai",
+          "size": null,
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": "travaihoanhai",
+          "size": null,
+          "quantity": 3
+        },
+        "latencies_ms": [
+          17.458100002841093
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho em một ly trà chanh sả",
+        "gold": {
+          "product": "trà chanh sả",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "trà chanh sả",
+          "size": null,
+          "quantity": "một"
+        },
+        "gold_normalized": {
+          "product": "trachanhsa",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "trachanhsa",
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          16.342700000677723
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi một ly sinh tố bơ size nhỏ",
+        "gold": {
+          "product": "sinh tố bơ",
+          "size": "nhỏ",
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "sinh tố bơ",
+          "size": "nhỏ",
+          "quantity": "một"
+        },
+        "gold_normalized": {
+          "product": "sinhtobo",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "sinhtobo",
+          "size": "M",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          16.862299999047536
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi 2 ly bạc xỉu",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          15.73840000492055
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi 2 bạc xỉu",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "xỉu",
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "xiu",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          14.346099997055717
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial"
+        ]
+      },
+      {
+        "text": "lấy giúp em một ly cà phê sữa đá",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "cà phê sữa đá",
+          "size": null,
+          "quantity": "một"
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          16.783099999884143
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "lấy cho em một cà phê sữa đá",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "cà",
+          "size": null,
+          "quantity": "một"
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "ca",
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          17.264599999180064
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial"
+        ]
+      },
+      {
+        "text": "cho mình 3 ly trà sữa trân châu",
+        "gold": {
+          "product": "trà sữa trân châu",
+          "size": null,
+          "quantity": "3"
+        },
+        "pred": {
+          "product": "trà sữa trân châu",
+          "size": null,
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "trasuatranchau",
+          "size": null,
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": "trasuatranchau",
+          "size": null,
+          "quantity": 3
+        },
+        "latencies_ms": [
+          22.09020000009332
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho mình 3 trà sữa trân châu",
+        "gold": {
+          "product": "trà sữa trân châu",
+          "size": null,
+          "quantity": "3"
+        },
+        "pred": {
+          "product": "trà sữa trân châu",
+          "size": null,
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "trasuatranchau",
+          "size": null,
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": "trasuatranchau",
+          "size": null,
+          "quantity": 3
+        },
+        "latencies_ms": [
+          19.545399998605717
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "anh ơi lấy 2 ly bạc xỉu size M",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "M",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "bạc xỉu",
+          "size": "M",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "M",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": "M",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          21.802400005981326
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "anh ơi lấy 2 bạc xỉu đi",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "xỉu",
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "xiu",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          18.663299997569993
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial"
+        ]
+      },
+      {
+        "text": "cho em hai ly trà đào sả cam",
+        "gold": {
+          "product": "trà đào sả cam",
+          "size": null,
+          "quantity": "hai"
+        },
+        "pred": {
+          "product": "trà đào sả cam",
+          "size": null,
+          "quantity": "hai"
+        },
+        "gold_normalized": {
+          "product": "tradaosacam",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "tradaosacam",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          17.142899996542837
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho em hai trà đào sả cam",
+        "gold": {
+          "product": "trà đào sả cam",
+          "size": null,
+          "quantity": "hai"
+        },
+        "pred": {
+          "product": "trà",
+          "size": null,
+          "quantity": "hai"
+        },
+        "gold_normalized": {
+          "product": "tradaosacam",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "tra",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          16.606799996225163
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial"
+        ]
+      },
+      {
+        "text": "cho tôi 1 ly bạc xỉu size M",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "M",
+          "quantity": "1"
+        },
+        "pred": {
+          "product": "bạc xỉu",
+          "size": "M",
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": "M",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          16.710000003513414
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi 1 ly bạc xỉu size L",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "L",
+          "quantity": "1"
+        },
+        "pred": {
+          "product": "bạc xỉu",
+          "size": "L",
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "L",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": "L",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          16.08519999717828
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi 1 ly bạc xỉu size lớn",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "lớn",
+          "quantity": "1"
+        },
+        "pred": {
+          "product": "bạc xỉu",
+          "size": "lớn",
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "L",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": "L",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          16.767699999036267
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi 1 ly bạc xỉu size nhỏ",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "nhỏ",
+          "quantity": "1"
+        },
+        "pred": {
+          "product": "bạc xỉu",
+          "size": "nhỏ",
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": "M",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          16.990299998724367
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi 1 ly bạc xỉu size vừa",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "vừa",
+          "quantity": "1"
+        },
+        "pred": {
+          "product": "bạc xỉu",
+          "size": "vừa",
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": "M",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          16.705100002582185
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi 1 ly bạc xỉu lớn",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "lớn",
+          "quantity": "1"
+        },
+        "pred": {
+          "product": "bạc xỉu",
+          "size": "lớn",
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "L",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": "L",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          18.287399994733278
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi 1 ly bạc xỉu nhỏ",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "nhỏ",
+          "quantity": "1"
+        },
+        "pred": {
+          "product": "bạc xỉu",
+          "size": "nhỏ",
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": "M",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          16.33640000363812
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "lấy 2 cà phê sữa đá to",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": "to",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "cà phê sữa đá",
+          "size": "to",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": "L",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "caphesuada",
+          "size": "L",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          15.994900000805501
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "lấy 2 cà phê sữa đá vừa",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": "vừa",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "cà phê sữa đá",
+          "size": "vừa",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": "M",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "caphesuada",
+          "size": "M",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          17.812600002798717
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "lấy 2 cà phê sữa đá nhỏ",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": "nhỏ",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "cà phê sữa đá",
+          "size": "nhỏ",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": "M",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "caphesuada",
+          "size": "M",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          15.638200005923864
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho em 3 trà sữa size M",
+        "gold": {
+          "product": "trà sữa",
+          "size": "M",
+          "quantity": "3"
+        },
+        "pred": {
+          "product": "trà sữa",
+          "size": "M",
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "trasua",
+          "size": "M",
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": "trasua",
+          "size": "M",
+          "quantity": 3
+        },
+        "latencies_ms": [
+          15.722199997981079
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho em 3 trà sữa size L",
+        "gold": {
+          "product": "trà sữa",
+          "size": "L",
+          "quantity": "3"
+        },
+        "pred": {
+          "product": "trà sữa",
+          "size": "L",
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "trasua",
+          "size": "L",
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": "trasua",
+          "size": "L",
+          "quantity": 3
+        },
+        "latencies_ms": [
+          15.619199999491684
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho em 2 sinh tố bơ size vừa",
+        "gold": {
+          "product": "sinh tố bơ",
+          "size": "vừa",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "sinh",
+          "size": "vừa",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "sinhtobo",
+          "size": "M",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "sinh",
+          "size": "M",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          16.298500006087124
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial"
+        ]
+      },
+      {
+        "text": "lấy một ly matcha size nhỏ",
+        "gold": {
+          "product": "matcha",
+          "size": "nhỏ",
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "matcha",
+          "size": "nhỏ",
+          "quantity": "một"
+        },
+        "gold_normalized": {
+          "product": "matcha",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "matcha",
+          "size": "M",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          16.42559999891091
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi 2 latte size to",
+        "gold": {
+          "product": "latte",
+          "size": "to",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "te",
+          "size": "to",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "latte",
+          "size": "L",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "te",
+          "size": "L",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          16.231599998718593
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial"
+        ]
+      },
+      {
+        "text": "cho tôi một ly bạc xỉu",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "một"
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          16.15989999845624
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi hai bạc xỉu",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "hai"
+        },
+        "pred": {
+          "product": "xỉu",
+          "size": null,
+          "quantity": "hai"
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "xiu",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          15.914700001303572
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial"
+        ]
+      },
+      {
+        "text": "lấy giúp em 3 ly trà sữa",
+        "gold": {
+          "product": "trà sữa",
+          "size": null,
+          "quantity": "3"
+        },
+        "pred": {
+          "product": "trà sữa",
+          "size": null,
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "trasua",
+          "size": null,
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": "trasua",
+          "size": null,
+          "quantity": 3
+        },
+        "latencies_ms": [
+          16.22520000091754
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "lấy giúp em ba ly trà sữa",
+        "gold": {
+          "product": "trà sữa",
+          "size": null,
+          "quantity": "ba"
+        },
+        "pred": {
+          "product": "trà sữa",
+          "size": null,
+          "quantity": "ba"
+        },
+        "gold_normalized": {
+          "product": "trasua",
+          "size": null,
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": "trasua",
+          "size": null,
+          "quantity": 3
+        },
+        "latencies_ms": [
+          19.021300002350472
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho em năm ly cà phê muối",
+        "gold": {
+          "product": "cà phê muối",
+          "size": null,
+          "quantity": "năm"
+        },
+        "pred": {
+          "product": "cà phê muối",
+          "size": null,
+          "quantity": "năm"
+        },
+        "gold_normalized": {
+          "product": "caphemuoi",
+          "size": null,
+          "quantity": 5
+        },
+        "pred_normalized": {
+          "product": "caphemuoi",
+          "size": null,
+          "quantity": 5
+        },
+        "latencies_ms": [
+          20.882800003164448
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho mình tám ly matcha",
+        "gold": {
+          "product": "matcha",
+          "size": null,
+          "quantity": "tám"
+        },
+        "pred": {
+          "product": "matcha",
+          "size": null,
+          "quantity": "tám"
+        },
+        "gold_normalized": {
+          "product": "matcha",
+          "size": null,
+          "quantity": 8
+        },
+        "pred_normalized": {
+          "product": "matcha",
+          "size": null,
+          "quantity": 8
+        },
+        "latencies_ms": [
+          19.747900005313568
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "anh ơi cho tôi 10 ly latte",
+        "gold": {
+          "product": "latte",
+          "size": null,
+          "quantity": "10"
+        },
+        "pred": {
+          "product": "latte",
+          "size": null,
+          "quantity": 10
+        },
+        "gold_normalized": {
+          "product": "latte",
+          "size": null,
+          "quantity": 10
+        },
+        "pred_normalized": {
+          "product": "latte",
+          "size": null,
+          "quantity": 10
+        },
+        "latencies_ms": [
+          15.765600001031999
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho em một ly trà chanh",
+        "gold": {
+          "product": "trà chanh",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "trà chanh",
+          "size": null,
+          "quantity": "một"
+        },
+        "gold_normalized": {
+          "product": "trachanh",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "trachanh",
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          16.724100001738407
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "mình lấy giúp 2 sinh tố bơ",
+        "gold": {
+          "product": "sinh tố bơ",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "sinh",
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "sinhtobo",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "sinh",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          16.951300000073388
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial"
+        ]
+      },
+      {
+        "text": "cho mình lấy 4 ly hồng trà sữa",
+        "gold": {
+          "product": "hồng trà sữa",
+          "size": null,
+          "quantity": "4"
+        },
+        "pred": {
+          "product": "hồng trà sữa",
+          "size": null,
+          "quantity": 4
+        },
+        "gold_normalized": {
+          "product": "hongtrasua",
+          "size": null,
+          "quantity": 4
+        },
+        "pred_normalized": {
+          "product": "hongtrasua",
+          "size": null,
+          "quantity": 4
+        },
+        "latencies_ms": [
+          18.757400001049973
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "lấy cho em một bac xiu nhỏ di",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "nhỏ",
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "c",
+          "size": "xi@@",
+          "quantity": "một"
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "c",
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          19.037300000491086
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": false,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial",
+          "SIZE missing"
+        ]
+      },
+      {
+        "text": "cho em hai ly bạc xỉu nha",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "hai"
+        },
+        "pred": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "hai"
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          15.636399999493733
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho em một ly cà phê muối nhé",
+        "gold": {
+          "product": "cà phê muối",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "cà phê muối",
+          "size": null,
+          "quantity": "một"
+        },
+        "gold_normalized": {
+          "product": "caphemuoi",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "caphemuoi",
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          16.31039999483619
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "lấy giúp em 5 sữa tươi trân châu đường đen",
+        "gold": {
+          "product": "sữa tươi trân châu đường đen",
+          "size": null,
+          "quantity": "5"
+        },
+        "pred": {
+          "product": "sữa tươi trân châu đường đen",
+          "size": null,
+          "quantity": 5
+        },
+        "gold_normalized": {
+          "product": "suatuoitranchauduongden",
+          "size": null,
+          "quantity": 5
+        },
+        "pred_normalized": {
+          "product": "suatuoitranchauduongden",
+          "size": null,
+          "quantity": 5
+        },
+        "latencies_ms": [
+          17.629299996769987
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho tôi 3 ly trà ô long sữa",
+        "gold": {
+          "product": "trà ô long sữa",
+          "size": null,
+          "quantity": "3"
+        },
+        "pred": {
+          "product": "trà ô long sữa",
+          "size": null,
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "traolongsua",
+          "size": null,
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": "traolongsua",
+          "size": null,
+          "quantity": 3
+        },
+        "latencies_ms": [
+          20.702099995105527
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho toi 2 ly bac xiu size lon",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "lớn",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "bac xiu",
+          "size": "lon",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "L",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": "L",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          17.33809999859659
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho em mot ly ca phe sua da",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "ca phe sua",
+          "size": "da",
+          "quantity": "mo@@"
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "caphesua",
+          "size": null,
+          "quantity": null
+        },
+        "latencies_ms": [
+          15.659600001526996
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": false
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial",
+          "QUANTITY missing"
+        ]
+      },
+      {
+        "text": "ca phe sua da cho em 2",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": null,
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          15.921499994874466
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "tra dao sa cam 1 ly",
+        "gold": {
+          "product": "trà đào sả cam",
+          "size": null,
+          "quantity": "1"
+        },
+        "pred": {
+          "product": "sa cam",
+          "size": null,
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "tradaosacam",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "sacam",
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          17.452100000809878
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial"
+        ]
+      },
+      {
+        "text": "ca phe muoi size M",
+        "gold": {
+          "product": "cà phê muối",
+          "size": "M",
+          "quantity": null
+        },
+        "pred": {
+          "product": "phe",
+          "size": "mu@@",
+          "quantity": null
+        },
+        "gold_normalized": {
+          "product": "caphemuoi",
+          "size": "M",
+          "quantity": null
+        },
+        "pred_normalized": {
+          "product": "phe",
+          "size": null,
+          "quantity": null
+        },
+        "latencies_ms": [
+          17.57799999904819
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": false,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial",
+          "SIZE missing"
+        ]
+      },
+      {
+        "text": "cho em 2 ly tra sua tran chau",
+        "gold": {
+          "product": "trà sữa trân châu",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "tra sua tran chau",
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "trasuatranchau",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "trasuatranchau",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          17.663200000242796
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "CHO EM 1 LY BAC XIU",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "1"
+        },
+        "pred": {
+          "product": "BAC XIU",
+          "size": null,
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          23.17909999692347
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "Cho em mot ly bac xiu",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "bac",
+          "size": "xi@@",
+          "quantity": "mo@@"
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "bac",
+          "size": null,
+          "quantity": null
+        },
+        "latencies_ms": [
+          18.95700000022771
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": false
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial",
+          "QUANTITY missing"
+        ]
+      },
+      {
+        "text": "ca phe sua da size lon",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": "lớn",
+          "quantity": null
+        },
+        "pred": {
+          "product": "ca",
+          "size": "lon",
+          "quantity": null
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": "L",
+          "quantity": null
+        },
+        "pred_normalized": {
+          "product": "ca",
+          "size": "L",
+          "quantity": null
+        },
+        "latencies_ms": [
+          19.730599997274112
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial"
+        ]
+      },
+      {
+        "text": "cho toi 3 tra sua",
+        "gold": {
+          "product": "trà sữa",
+          "size": null,
+          "quantity": "3"
+        },
+        "pred": {
+          "product": null,
+          "size": null,
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "trasua",
+          "size": null,
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": null,
+          "size": null,
+          "quantity": 3
+        },
+        "latencies_ms": [
+          20.655799999076407
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT missing"
+        ]
+      },
+      {
+        "text": "anh lấy giúp em 2 ly bạc xỉu nha",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          21.10260000335984
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho mình một cà phê sữa đá đi",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "cà",
+          "size": null,
+          "quantity": "một"
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "ca",
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          20.87999999639578
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial"
+        ]
+      },
+      {
+        "text": "em lấy giúp 3 trà đào sả cam nhé",
+        "gold": {
+          "product": "trà đào sả cam",
+          "size": null,
+          "quantity": "3"
+        },
+        "pred": {
+          "product": "trà",
+          "size": null,
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "tradaosacam",
+          "size": null,
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": "tra",
+          "size": null,
+          "quantity": 3
+        },
+        "latencies_ms": [
+          18.510900001274422
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial"
+        ]
+      },
+      {
+        "text": "anh ơi cho em 2 ly matcha đi",
+        "gold": {
+          "product": "matcha",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "matcha",
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "matcha",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "matcha",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          17.169099999591708
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho em một ly trà chanh sả nhé",
+        "gold": {
+          "product": "trà chanh sả",
+          "size": null,
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "trà chanh sả",
+          "size": null,
+          "quantity": "một"
+        },
+        "gold_normalized": {
+          "product": "trachanhsa",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "trachanhsa",
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          16.088399999716785
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "lấy giúp tôi 2 bạc xỉu đi",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "xỉu",
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "xiu",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          16.249899999820627
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial"
+        ]
+      },
+      {
+        "text": "cho quán 3 ly cà phê sữa đá",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": null,
+          "quantity": "3"
+        },
+        "pred": {
+          "product": "cà phê sữa đá",
+          "size": null,
+          "quantity": 3
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 3
+        },
+        "pred_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 3
+        },
+        "latencies_ms": [
+          16.64100000198232
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "mình lấy giúp 2 ly trà sữa nhé",
+        "gold": {
+          "product": "trà sữa",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "trà sữa",
+          "size": null,
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "trasua",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "trasua",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          16.376000006857794
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "cho em 1 ly cà phê muối giúp em",
+        "gold": {
+          "product": "cà phê muối",
+          "size": null,
+          "quantity": "1"
+        },
+        "pred": {
+          "product": "cà phê muối",
+          "size": null,
+          "quantity": 1
+        },
+        "gold_normalized": {
+          "product": "caphemuoi",
+          "size": null,
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "caphemuoi",
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          21.344100001442712
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "anh ơi lấy giúp 4 sinh tố bơ nha",
+        "gold": {
+          "product": "sinh tố bơ",
+          "size": null,
+          "quantity": "4"
+        },
+        "pred": {
+          "product": "sinh",
+          "size": null,
+          "quantity": 4
+        },
+        "gold_normalized": {
+          "product": "sinhtobo",
+          "size": null,
+          "quantity": 4
+        },
+        "pred_normalized": {
+          "product": "sinh",
+          "size": null,
+          "quantity": 4
+        },
+        "latencies_ms": [
+          16.8684000018402
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial"
+        ]
+      },
+      {
+        "text": "cho tôi 2 bạc xỉu size lớn đá ít",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "lớn",
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "bạc",
+          "size": "lớn",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "L",
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "bac",
+          "size": "L",
+          "quantity": 2
+        },
+        "latencies_ms": [
+          17.82929999899352
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial"
+        ]
+      },
+      {
+        "text": "size M cho em một cà phê sữa đá",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": "M",
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "cà phê sữa đá",
+          "size": "M",
+          "quantity": "một"
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "caphesuada",
+          "size": "M",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          21.152199995412957
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": true,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": true,
+        "errors": []
+      },
+      {
+        "text": "em muốn một ly bạc xiu sizeM",
+        "gold": {
+          "product": "bạc xỉu",
+          "size": "M",
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "bạc",
+          "size": "xi@@",
+          "quantity": "một"
+        },
+        "gold_normalized": {
+          "product": "bacxiu",
+          "size": "M",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "bac",
+          "size": null,
+          "quantity": 1
+        },
+        "latencies_ms": [
+          17.404599995643366
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": false,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial",
+          "SIZE missing"
+        ]
+      },
+      {
+        "text": "cho em một ly trà sữa trân châu, không đường, size lớn",
+        "gold": {
+          "product": "trà sữa trân châu",
+          "size": "lớn",
+          "quantity": "một"
+        },
+        "pred": {
+          "product": "trà sữa trân châu, không đường@@",
+          "size": "lớn",
+          "quantity": "một"
+        },
+        "gold_normalized": {
+          "product": "trasuatranchau",
+          "size": "L",
+          "quantity": 1
+        },
+        "pred_normalized": {
+          "product": "trasuatranchau,khongduong@@",
+          "size": "L",
+          "quantity": 1
+        },
+        "latencies_ms": [
+          23.62629999697674
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial"
+        ]
+      },
+      {
+        "text": "lấy giúp 2 ca phe sua da nhe",
+        "gold": {
+          "product": "cà phê sữa đá",
+          "size": null,
+          "quantity": "2"
+        },
+        "pred": {
+          "product": "phe sua",
+          "size": "da",
+          "quantity": 2
+        },
+        "gold_normalized": {
+          "product": "caphesuada",
+          "size": null,
+          "quantity": 2
+        },
+        "pred_normalized": {
+          "product": "phesua",
+          "size": null,
+          "quantity": 2
+        },
+        "latencies_ms": [
+          20.20510000147624
+        ],
+        "total_tokens": 0,
+        "field_correct": {
+          "product": false,
+          "size": true,
+          "quantity": true
+        },
+        "full_match": false,
+        "errors": [
+          "PRODUCT partial"
+        ]
+      }
+    ]
+  },
+  "llm_error": {
+    "name": "LLM_error",
+    "cases": []
+  }
+}

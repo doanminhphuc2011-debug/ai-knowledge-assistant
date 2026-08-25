@@ -1,75 +1,200 @@
+"""Chatbot orchestration.
+Intent routing is LLM-driven. Entity extraction is generic. Tool readiness is
+validated against each tool's schema instead of a hard-coded entity list.
 """
-Chatbot RAG - Python + LangChain + Groq + Qdrant
-Gồm: System Prompt (Persona Pattern) + RAG (Retrieval-Augmented Generation)
-+ Conversation Memory (có trim history) + Tool Calling (giỏ hàng)
-
-File này CHỈ còn đóng vai trò ĐIỀU PHỐI (entry point) - toàn bộ logic chi
-tiết đã được tách sang các module chuyên trách, mỗi module 1 trách nhiệm:
-- llm.py           : khởi tạo LLM (Groq/Gemini/Local) + fallback + bind tool
-- prompts.py       : system prompt (persona + quy tắc RAG + quy tắc tool)
-- memory.py        : lịch sử hội thoại (lưu/trim/ghép context RAG)
-- tool_executor.py : vòng lặp gọi tool khi model yêu cầu
-- rag.py           : truy xuất context từ Qdrant (không đổi từ trước)
-- tools.py         : định nghĩa tool + giỏ hàng (không đổi từ trước)
-"""
-from multiprocessing import context
+from __future__ import annotations
+import logging
+import os
 import warnings
-warnings.filterwarnings("ignore")  # Ẩn toàn bộ warning trong hệ thống
+# Hugging Face / Transformers: ẩn progress bar và advisory warning
+os.environ.setdefault("HF_HUB_DISABLE_PROGRESS_BARS", "1")
+os.environ.setdefault("TRANSFORMERS_NO_ADVISORY_WARNINGS", "1")
+os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
+warnings.filterwarnings("ignore", module=r"huggingface_hub\..*")
+warnings.filterwarnings("ignore", message=r".*multilingual-e5-large now uses mean pooling.*", category=UserWarning)
+logging.getLogger("huggingface_hub").setLevel(logging.ERROR)
 
-import memory
+from langchain_core.messages import AIMessage, ToolMessage
+from context_management import ContextBlock
+from context_runtime import get_context_manager
+from intent.extractor_factory import get_extractor
+from intent.product_validation_strategy import (ProductValidationStrategy, get_product_validation_strategy)
 from llm import llm
+from quota_management import QuotaExceededError
 from rag import retrieve_context
-from tool_executor import generate_with_tools
-from tools import reset_cart
+from tool_argument_builder import ToolArgumentBuilder
+from tool_executor import _execute_tool_call, generate_with_tools
+from tools.cart import reset_cart
+# Ẩn log không cần thiết của Hugging Face khi demo
+logging.getLogger("huggingface_hub").setLevel(logging.ERROR)
+logging.getLogger("huggingface_hub.utils._http").setLevel(logging.ERROR)
+logger = logging.getLogger(__name__)
+_context_manager = get_context_manager()
+_tool_argument_builder = ToolArgumentBuilder()
 
+_llm_intent_extractor = None
+_phobert_ner_extractor = None
+_llm_intent_init_failed = False
+_phobert_init_failed = False
+_product_validation_strategy: ProductValidationStrategy = get_product_validation_strategy()
 
-# 1. GỌI LLM (RAG + MEMORY + TOOL CALLING)
-def ask(question: str) -> str:
-    """Hàm chính: nhận câu hỏi, trả về câu trả lời của chatbot.
-    Đây là entrypoint mà cả CLI lẫn evaluate.py đều dùng chung, để không
-    có 2 nơi implement logic RAG + generate khác nhau.
+def _get_llm_intent_extractor():
+    global _llm_intent_extractor, _llm_intent_init_failed
+    if _llm_intent_extractor is not None:
+        return _llm_intent_extractor
+    if _llm_intent_init_failed:
+        return None
+    try:
+        _llm_intent_extractor = get_extractor("llm")
+        return _llm_intent_extractor
+    except Exception:
+        _llm_intent_init_failed = True
+        logger.exception("[ROUTER] Không khởi tạo được LLM Intent Classifier")
+        return None
 
-    Luồng xử lý (giữ nguyên thứ tự như trước khi tách module, chỉ khác là
-    mỗi bước giờ được ủy quyền cho đúng module chuyên trách):
-        a) RETRIEVE  : lấy context liên quan từ redis           -> rag.py
-        b) MEMORY    : lưu câu hỏi gốc (không kèm context)       -> memory.py
-        c) GENERATE  : gọi LLM, tự xử lý Tool Calling nếu cần    -> llm.py + tool_executor.py
-        d) MEMORY    : lưu câu trả lời cuối cùng                 -> memory.py
-    """
-    # a) RETRIEVE: lấy context liên quan nhất từ redis
-    context = retrieve_context(question)
-    augmented_input = memory.build_augmented_message(question, context)
-    # b) Lưu câu hỏi GỐC (không kèm context) vào lịch sử - để lịch sử gọn,
-    # tránh phình to / lặp lại context nhiều lần qua các lượt chat.
-    memory.append_user_message(question)
+def _get_phobert_ner_extractor():
+    global _phobert_ner_extractor, _phobert_init_failed
+    if _phobert_ner_extractor is not None:
+        return _phobert_ner_extractor
+    if _phobert_init_failed:
+        return None
+    try:
+        _phobert_ner_extractor = get_extractor("phobert")
+        return _phobert_ner_extractor
+    except Exception:
+        _phobert_init_failed = True
+        logger.exception("[ROUTER] Không khởi tạo được PhoBERT NER")
+        return None
 
-    # c) GENERATE + TOOL CALLING: gửi lịch sử hội thoại (giữ nguyên context
-    # các lượt trước) + câu hỏi hiện tại đã augment context RAG (chỉ dùng
-    # bản augment cho lượt gọi này, không lưu vào history). Nếu model cần
-    # gọi tool (add_to_cart, checkout...), generate_with_tools() tự lo toàn
-    # bộ vòng lặp thực thi tool và trả về câu trả lời cuối cùng.
-    messages_for_llm = memory.build_llm_messages(augmented_input)
-    
+def _run_intent_classification(question: str):
+    extractor = _get_llm_intent_extractor()
+    if extractor is None:
+        return None
+    try:
+        return extractor.extract(question)
+    except QuotaExceededError:
+        raise
+    except Exception:
+        logger.exception("[INTENT] LLM classification failed")
+        return None
+
+def _run_ner(question: str):
+    extractor = _get_phobert_ner_extractor()
+    if extractor is None:
+        return None
+    try:
+        result = extractor.extract(question)
+    except Exception:
+        logger.exception("[NER] PhoBERT extraction failed")
+        return None
+    logger.debug("[NER] entities=%s", result["entities"])
+    return result
+
+def _validate_product(llm_product: str | None, ner_product: str | None):
+    return _product_validation_strategy.validate(llm_product=llm_product, ner_product=ner_product)
+
+def _inject_tool_result(messages, tool_name: str, tool_args: dict, tool_result: str):
+    tool_call = {"name": tool_name, "args": tool_args, "id": "router-call-1"}
+    logger.debug("[TOOL] %s(%s)", tool_name, tool_args)
+    return messages + [
+        AIMessage(content="", tool_calls=[tool_call]),
+        ToolMessage(content=tool_result, tool_call_id="router-call-1"),
+    ]
+
+def _generate_with_rag(question: str, tool_name: str | None = None, tool_args: dict | None = None, session_id: str | None = None) -> str:
+    retrieved_context = retrieve_context(question)
+    context_blocks = (
+        [ContextBlock(name="retrieval", content=retrieved_context)]
+        if retrieved_context
+        else []
+    )
+
+    assembly = _context_manager.prepare(user_input=question, session_id=session_id, context_blocks=context_blocks)
+    messages_for_llm = assembly.messages
+
+    logger.debug(
+        "[CONTEXT] session=%s input_tokens~%s history_used=%s history_dropped=%s external_tokens~%s",
+        assembly.session_id,
+        assembly.estimated_input_tokens,
+        assembly.history_messages_used,
+        assembly.history_messages_dropped,
+        assembly.external_context_tokens,
+    )
+
+    if tool_name is not None and tool_args is not None:
+        tool_call = {"name": tool_name, "args": tool_args, "id": "router-call-1"}
+        tool_result = _execute_tool_call(tool_call)
+        messages_for_llm = _inject_tool_result(
+            messages_for_llm, tool_name, tool_args, tool_result
+        )
+
     answer = generate_with_tools(llm, messages_for_llm)
-    # d) Lưu câu trả lời CUỐI CÙNG (đã tổng hợp từ tool, nếu có) vào memory để nhớ cho lượt sau.
-    memory.append_ai_message(answer)
+    _context_manager.record_turn(user_input=question, assistant_output=answer, session_id=assembly.session_id)
     return answer
 
+def _ask_impl(question: str, session_id: str | None = None) -> str:
+    intent_result = _run_intent_classification(question)
+    if intent_result is None:
+        return _generate_with_rag(question, session_id=session_id)
 
-def reset_history() -> None:
-    """Đưa lịch sử hội thoại về trạng thái ban đầu (chỉ còn system prompt)
-    VÀ làm trống giỏ hàng - vì giỏ hàng cũng là state của phiên chat, nếu
-    không reset cùng lúc thì 1 phiên mới có thể "thừa hưởng" giỏ hàng của
-    phiên trước (vd. giữa các câu hỏi độc lập trong evaluate.py)."""
-    memory.reset()
+    intent = intent_result["intent"]
+
+    # Information intents do not correspond to a registered business tool.
+    if not _tool_argument_builder.has_tool(intent):
+        return _generate_with_rag(question, session_id=session_id)
+
+    # Parameterless tools (e.g. view_cart/checkout) can be called immediately.
+    direct = _tool_argument_builder.build(intent, {})
+    if direct.ready:
+        return _generate_with_rag(question, tool_name=direct.tool_name, tool_args=direct.arguments, session_id=session_id)
+
+    ner_result = _run_ner(question)
+    if ner_result is None:
+        return _generate_with_rag(question, session_id=session_id)
+
+    ner_entities = ner_result["entities"]
+    llm_entities = intent_result["entities"]
+
+    # Product consistency is checked only when the NER result actually contains
+    # a product. Tools without product slots are unaffected.
+    ner_product = ner_entities.get("product_name")
+    llm_product = llm_entities.get("product_name")
+    if isinstance(ner_product, str):
+        validation = _validate_product(llm_product=llm_product if isinstance(llm_product, str) else None, ner_product=ner_product)
+        if not validation.matched:
+            logger.debug("[ROUTER] PRODUCT MISMATCH | LLM=%r | PhoBERT=%r", validation.llm_product, validation.ner_product)
+            return _generate_with_rag(question, session_id=session_id)
+
+    build = _tool_argument_builder.build(intent, ner_entities)
+    if not build.ready:
+        logger.debug("[ROUTER] Missing required tool slots: %s", build.missing_required)
+        return _generate_with_rag(question, session_id=session_id)
+
+    return _generate_with_rag(question, tool_name=build.tool_name, tool_args=build.arguments, session_id=session_id)
+
+def ask(question: str, session_id: str | None = None) -> str:
+    if not isinstance(question, str) or not question.strip():
+        raise ValueError("question phải là chuỗi không rỗng")
+    question = question.strip()
+
+    try:
+        return _ask_impl(question, session_id=session_id)
+    except QuotaExceededError as exc:
+        logger.warning(
+            "[QUOTA] resource=%s used=%s limit=%s retry_after=%ss",
+            exc.resource,
+            exc.used,
+            exc.limit,
+            exc.retry_after_seconds,
+        )
+        return ("Hệ thống đang đạt giới hạn sử dụng tạm thời. " f"Vui lòng thử lại sau khoảng {exc.retry_after_seconds} giây.")
+
+def reset_history(session_id: str | None = None) -> None:
+    _context_manager.clear_session(session_id)
     reset_cart()
 
-
-# Giữ tên hàm cũ để tương thích ngược - bất kỳ code nào đang gọi chat()
 chat = ask
 
-
-# 2. VÒNG LẶP CHAT (CLI)
 if __name__ == "__main__":
     print("☕ Ori - Trợ lý quán cà phê DMP")
     print("Nhập 'exit' để thoát.")
@@ -79,6 +204,4 @@ if __name__ == "__main__":
             continue
         if user_input.lower() == "exit":
             break
-        answer = ask(user_input)
-        print(f"Ori: {answer}\n")
-        
+        print(f"Ori: {ask(user_input)}\n")

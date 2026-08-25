@@ -1,40 +1,6 @@
-"""
-voice/config.py
-Cấu hình cho Voice Chat - client MỚI đứng cạnh Text Chat, không phải một
-phần của Chatbot Core (chatbot.py). Tách file riêng để voice/ tự chứa toàn
-bộ config của mình, không đụng tới cấu hình LLM/RAG hiện có (llm.py).
-
-Thiết kế (giữ đúng tinh thần của llm.py: đọc .env, validate ngay, fail-fast):
-
-- VoiceConfig là dataclass(frozen=True): immutable sau khi khởi tạo. Object
-  cấu hình bị gán nhầm giá trị ở đâu đó giữa chừng runtime là lỗi rất khó
-  trace; frozen=True chặn việc này ngay từ đầu.
-
-- get_voice_config() dùng @lru_cache(maxsize=1) làm singleton: toàn bộ
-  process chỉ đọc + validate .env đúng 1 lần ở lần gọi đầu tiên, các lần
-  gọi sau (từ stt.py, tts.py, voice_chat.py...) trả về CÙNG 1 instance đã
-  cache, không đọc lại .env hay validate lại mỗi lần.
-
-- Validate ngay trong __post_init__ (fail-fast): nếu .env cấu hình sai,
-  lỗi phải nổ ra ngay lúc get_voice_config() được gọi lần đầu (thường là
-  lúc import voice_chat.py để khởi động), không phải đợi tới lúc có người
-  dùng thật đang nói vào micro mới phát hiện ra config sai.
-
-- CONDITIONAL VALIDATION theo VOICE_ENABLED: Voice là feature optional,
-  mặc định TẮT. Nếu VOICE_ENABLED=False, các biến STT/TTS (VOICE_MODEL,
-  VOICE_LANGUAGE, VOICE_SAMPLE_RATE, VOICE_DEVICE, VOICE_TIMEOUT,
-  VOICE_OUTPUT_FORMAT) KHÔNG bị bắt buộc và KHÔNG bị validate - vì lúc đó
-  người dùng chỉ chạy Text Chat, không có lý do gì bắt họ khai báo cấu
-  hình STT/TTS. Chỉ khi VOICE_ENABLED=True mới bắt buộc + validate đầy đủ
-  6 biến còn lại như trước.
-
-- Không có giá trị nào bị hardcode trong logic nghiệp vụ: tất cả 7 biến
-  đều đọc từ os.getenv(...). Riêng VOICE_ENABLED có default=False khi biến
-  vắng mặt trong .env - đây là quyết định an toàn cho một feature flag (Voice
-  là tính năng mở rộng, nếu quên khai báo thì phải mặc định TẮT chứ không
-  phải chatbot tự nhiên bật voice ngoài ý muốn), không phải hardcode giá trị
-  nghiệp vụ như model/device/format.
-"""
+"""Module quản lý cấu hình Voice Chat độc lập: Triển khai frozen dataclass singleton với 
+cơ chế fail-fast và conditional validation theo feature flag `VOICE_ENABLED` (mặc định tắt), 
+đảm bảo không làm gián đoạn Text Chat."""
 from __future__ import annotations
 
 import os
@@ -47,7 +13,6 @@ load_dotenv()
 
 _VALID_OUTPUT_FORMATS = {"mp3", "wav", "ogg"}
 
-
 def _require(name: str) -> str:
     """Đọc 1 biến bắt buộc từ .env, raise ngay nếu thiếu - cùng cách
     llm.py đang raise ValueError khi thiếu GROQ_API_KEY."""
@@ -55,7 +20,6 @@ def _require(name: str) -> str:
     if raw is None or raw.strip() == "":
         raise ValueError(f"Thiếu {name} trong file .env")
     return raw.strip()
-
 
 def _parse_bool(name: str, raw: str) -> bool:
     normalized = raw.strip().lower()
@@ -68,13 +32,11 @@ def _parse_bool(name: str, raw: str) -> bool:
         f"Chỉ chấp nhận true/false (hoặc 1/0, yes/no, on/off)."
     )
 
-
 def _parse_int(name: str, raw: str) -> int:
     try:
         return int(raw)
     except ValueError:
         raise ValueError(f"{name} trong .env phải là số nguyên, hiện tại: '{raw}'")
-
 
 def _parse_float(name: str, raw: str) -> float:
     try:
@@ -82,14 +44,12 @@ def _parse_float(name: str, raw: str) -> float:
     except ValueError:
         raise ValueError(f"{name} trong .env phải là số, hiện tại: '{raw}'")
 
-
 def _read_unvalidated(name: str, default: str) -> str:
     """Đọc 1 biến khi VOICE_ENABLED=False: không bắt buộc phải có trong
     .env, không raise nếu thiếu/sai định dạng. Voice đang tắt nên giá trị
     này không được dùng tới - chỉ cần đủ để khởi tạo VoiceConfig."""
     raw = os.getenv(name)
     return raw.strip() if raw and raw.strip() else default
-
 
 def _read_int_unvalidated(name: str, default: int) -> int:
     """Như _read_unvalidated nhưng cho số nguyên: vẫn ưu tiên đọc từ .env
@@ -100,7 +60,6 @@ def _read_int_unvalidated(name: str, default: int) -> int:
     except ValueError:
         return default
 
-
 def _read_float_unvalidated(name: str, default: float) -> float:
     """Như _read_int_unvalidated nhưng cho số thực."""
     raw = os.getenv(name)
@@ -108,7 +67,6 @@ def _read_float_unvalidated(name: str, default: float) -> float:
         return float(raw) if raw and raw.strip() else default
     except ValueError:
         return default
-
 
 @dataclass(frozen=True)
 class VoiceConfig:
@@ -149,7 +107,6 @@ class VoiceConfig:
                 f"VOICE_OUTPUT_FORMAT '{self.output_format}' không hợp lệ. "
                 f"Chỉ chấp nhận: {', '.join(sorted(_VALID_OUTPUT_FORMATS))}"
             )
-
 
 @lru_cache(maxsize=1)
 def get_voice_config() -> VoiceConfig:

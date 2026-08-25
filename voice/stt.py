@@ -1,29 +1,13 @@
 """
 voice/stt.py
-Speech-to-Text: Audio -> Text. Đây là bước ĐẦU TIÊN trong pipeline Voice
-Chat (đứng trước text_normalizer.py và chatbot.ask()):
+Speech-to-Text: Audio (np.ndarray) -> Text (raw).
 
-    Audio -> [stt.py] -> Text (raw) -> text_normalizer.py -> chatbot.ask()
+Pipeline vị trí: Audio -> [stt.py] -> Text (raw) -> text_normalizer.py -> chatbot.ask()
 
-File này CHỈ có đúng 1 trách nhiệm: nhận audio, trả về text. Không làm gì
-khác:
-- Không normalize text (đó là việc của text_normalizer.py ở phase sau).
-- Không biết gì về chatbot/RAG/Retriever/Redis/Memory/Tool Calling/LLM -
-  những thứ đó chỉ tồn tại phía sau `from chatbot import ask`, và stt.py
-  không import chatbot.
-- Không thu âm (microphone), không phát âm (speaker), không đo latency.
-
-Dùng faster-whisper (CTranslate2 re-implementation của Whisper) thay vì
-thư viện `openai-whisper` gốc, vì nhanh hơn đáng kể và tốn ít bộ nhớ hơn
-với cùng độ chính xác - phù hợp hơn cho 1 voice chat cần phản hồi nhanh.
-
-LƯU Ý VỀ SAMPLE RATE (ràng buộc của engine, không phải business logic):
-faster-whisper yêu cầu audio đầu vào dạng mảng (np.ndarray) phải là mono,
-16000Hz - đây là ràng buộc của bản thân model Whisper, áp dụng cho MỌI
-checkpoint. stt.py không tự kiểm tra/ép giá trị này trong code; nó chỉ
-dùng đúng VOICE_SAMPLE_RATE lấy từ VoiceConfig. Việc đảm bảo
-VOICE_SAMPLE_RATE=16000 trong .env là trách nhiệm của cấu hình/vận hành,
-không phải của STT.
+Đặc điểm thiết kế:
+- Đơn nhiệm: Chỉ chuyển đổi audio sang raw text; không chứa logic chuẩn hóa văn bản, thu/phát âm thanh hay nghiệp vụ LLM/RAG.
+- Engine: Dùng `faster-whisper` (CTranslate2) để tối ưu tốc độ suy luận và tiết kiệm RAM/VRAM cho voice chat thời gian thực.
+- Audio format: Yêu cầu chuẩn mảng mono 16kHz theo ràng buộc kỹ thuật của model Whisper (được đồng bộ qua `VoiceConfig.sample_rate`).
 """
 from __future__ import annotations
 

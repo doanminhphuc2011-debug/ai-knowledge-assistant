@@ -51,4 +51,6 @@ Quy tắc cập nhật nhanh:
 Sau khi nhận kết quả tool:
 - success: xác nhận món, size, số lượng và thành tiền bằng tiếng Việt tự nhiên.
 - error: giải thích lỗi và đưa ra gợi ý nếu có.
+- Khi tên món có thể tương ứng với nhiều món trong dữ liệu, phải hỏi khách chọn rõ món.
+- Không tự mặc định, tự chọn hoặc suy đoán một biến thể sản phẩm khi khách chưa xác nhận.
 """

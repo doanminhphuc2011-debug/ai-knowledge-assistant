@@ -1,26 +1,14 @@
 """
-eval_retrieval.py
-Đo CHỈ riêng chất lượng retrieval (KHÔNG gọi LLM) dựa trên test_cases.json.
-
-Khác với evaluate.py (đo end-to-end: retrieval + generation, phải gọi
-ask() -> tốn LLM call, chậm, tốn quota), file này CHỈ gọi retrieve() từ
-rag.py - nhanh, miễn phí, chạy lại bao nhiêu lần cũng được. Mục đích chính:
-
-    Chạy file này 1 lần TRƯỚC khi đổi sang hybrid search (baseline dense-only)
-    -> lưu lại kết quả.
-    Sau khi implement hybrid search, chạy lại đúng file này (không đổi gì)
-    -> so kết quả 2 lần chạy để biết hybrid search có thực sự cải thiện
-    retrieval hay không, bằng số liệu cụ thể thay vì cảm tính.
-
-Không sửa rag.py/retriever.py/vector_store.py - chỉ gọi qua interface công
-khai retrieve() đã có sẵn, nên dùng được ngay cả sau khi retriever.py được
-đổi sang hybrid (miễn interface retrieve(query) -> {"context", "results"}
-không đổi).
-
-Chạy: python eval_retrieval.py
-Kết quả:
-- In tóm tắt metric ra terminal (so sánh được giữa các lần chạy).
-- Ghi chi tiết từng câu hỏi vào retrieval_eval_report.csv
+Bộ công cụ đánh giá độc lập tầng truy xuất dữ liệu (Retrieval-Only Evaluation):
+1. Mục tiêu & Triết lý thiết kế:
+   - Đánh giá phân lập (Isolated Testing): Đo lường thuần túy chất lượng retrieval mà không phụ thuộc vào tầng Generation của LLM; giải quyết bài toán chi phí token và độ trễ của `evaluate.py`.
+   - Đối chuẩn thực nghiệm (A/B Benchmarking): Cung cấp số liệu định lượng chuẩn xác để đối soát hiệu quả trước và sau khi nâng cấp từ Dense-only lên Hybrid Search.
+2. Tính tương thích ngược (Interface Decoupling):
+   - Chỉ tương tác qua public API `retrieve(query) -> dict` từ `rag.py`.
+   - Giữ nguyên script mà không cần sửa đổi khi backend retriever nâng cấp thuật toán nội bộ.
+3. Đầu ra (Reporting):
+   - Terminal: Tóm tắt các chỉ số thống kê tổng hợp (Hit Rate, Precision, Recall...).
+   - File xuất: `retrieval_eval_report.csv` lưu chi tiết context trả về và kết quả đánh giá của từng câu hỏi.
 """
 from __future__ import annotations
 
@@ -38,13 +26,11 @@ REPORT_PATH = "retrieval_eval_report.csv"
 # liên quan nào trong knowledge base (câu hỏi ngoài phạm vi quán).
 NO_SOURCE = "none"
 
-
 # 1. LOAD DỮ LIỆU TEST (dùng lại đúng test_cases.json của evaluate.py, để
 # 2 file luôn đánh giá trên cùng 1 bộ câu hỏi, không lệch nhau).
 def load_test_cases(path: str = TEST_CASES_PATH) -> list[dict]:
     with open(path, encoding="utf-8") as f:
         return json.load(f)
-
 
 # 2. CÁC HÀM ĐO / TÍNH METRIC CHO TỪNG CÂU HỎI
 def get_retrieved_sources(results: list[Any]) -> list[str]:
@@ -55,7 +41,6 @@ def get_retrieved_sources(results: list[Any]) -> list[str]:
         meta = getattr(r, "metadata", None) or {}
         sources.append(meta.get("type", "unknown"))
     return sources
-
 
 def check_retriever_correct(
     expected_source: str, retrieved_sources: list[str], context: str
@@ -81,7 +66,6 @@ def check_context_precision(
     relevant = sum(1 for s in retrieved_sources if s == expected_source)
     return relevant / len(retrieved_sources)
 
-
 def check_reciprocal_rank(expected_source: str, retrieved_sources: list[str]) -> float | None:
     """Reciprocal Rank = 1 / (vị trí xuất hiện đầu tiên của expected_source
     trong danh sách kết quả, tính từ 1). 0 nếu không xuất hiện.
@@ -97,7 +81,6 @@ def check_reciprocal_rank(expected_source: str, retrieved_sources: list[str]) ->
             return 1.0 / rank
     return 0.0
 
-
 def check_false_positive(expected_source: str, context: str) -> bool | None:
     """Riêng cho câu hỏi expected_source == "none": True nếu retriever vẫn
     trả về context (đáng lẽ phải rỗng) - đây là dấu hiệu retriever "ép"
@@ -106,7 +89,6 @@ def check_false_positive(expected_source: str, context: str) -> bool | None:
     if expected_source != NO_SOURCE:
         return None
     return context.strip() != ""
-
 
 # 3. VÒNG LẶP ĐÁNH GIÁ CHÍNH
 def evaluate_single_case(case: dict) -> dict:
@@ -136,14 +118,12 @@ def evaluate_single_case(case: dict) -> dict:
         "latency": latency,
     }
 
-
 def run_evaluation() -> None:
     test_cases = load_test_cases()
     eval_results = [evaluate_single_case(case) for case in test_cases]
 
     write_report(eval_results)
     print_summary(eval_results)
-
 
 # 4. OUTPUT: CSV + TERMINAL SUMMARY
 def write_report(eval_results: list[dict], path: str = REPORT_PATH) -> None:
@@ -179,10 +159,8 @@ def write_report(eval_results: list[dict], path: str = REPORT_PATH) -> None:
             })
     print(f"Đã ghi báo cáo chi tiết vào {path}\n")
 
-
 def _avg(values: list[float]) -> float:
     return sum(values) / len(values) if values else 0.0
-
 
 def print_summary(eval_results: list[dict]) -> None:
     total = len(eval_results)
@@ -217,7 +195,6 @@ def print_summary(eval_results: list[dict]) -> None:
         "thành retrieval_eval_dense_baseline.csv) TRƯỚC khi đổi sang hybrid\n"
         "search, để có căn cứ so sánh khách quan sau khi implement xong."
     )
-
 
 if __name__ == "__main__":
     run_evaluation()

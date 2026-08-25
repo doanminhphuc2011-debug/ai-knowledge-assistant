@@ -6,6 +6,9 @@ langchain-community
 langchain-redis
 python-dotenv
 fastembed 
+sentence-transformers>=3.0
+litellm[proxy]
+langchain-openai
 sounddevice
 soundfile
 numpy

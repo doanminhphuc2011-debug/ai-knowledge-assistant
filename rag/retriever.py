@@ -1,34 +1,10 @@
 """
-retriever.py
-Tạo LangChain Retriever từ vector_store.get_vector_store() - đây là thứ mà
-rag.py gọi bằng `retriever.invoke(query)` thay vì tự viết code gọi thẳng
-`QdrantClient.query()` như trước.
-
- BUG ĐÃ SỬA 
-Bản trước dùng `vector_store.as_retriever(search_type="similarity_score_threshold",
-search_kwargs={"score_threshold": SCORE_THRESHOLD})`. Cách này để LangChain tự lọc
-theo ngưỡng, nhưng LangChain KHÔNG so ngưỡng trực tiếp trên raw score của Qdrant -
-nó gọi `_select_relevance_score_fn()`, với QdrantVectorStore (distance=COSINE) là:
-
-    relevance_score = (raw_score + 1.0) / 2.0
-
-rồi mới so `relevance_score >= score_threshold`. SCORE_THRESHOLD = 0.4 của project
-được tune cho RAW SCORE (y hệt cách rag.py bản Qdrant thuần so sánh trước đây:
-`r.score >= SCORE_THRESHOLD`), KHÔNG phải cho relevance_score đã biến đổi. Vì
-`(raw + 1) / 2` luôn lớn hơn raw khá nhiều với các giá trị dương thường gặp, ngưỡng
-0.4 trở nên gần như vô tác dụng (retriever trả về hầu hết mọi thứ, kể cả chunk
-không liên quan) -> đây chính là nguyên nhân evaluate.py cho kết quả kém/sai sau khi
-migrate sang LangChain (đặc biệt các câu hỏi "expected_source": "none" luôn bị lấy
-nhầm context, và context_precision giảm mạnh).
-
-CÁCH SỬA:
-Tự viết 1 Retriever nhỏ (`_ThresholdRetriever`), lọc thẳng trên RAW SCORE trả về từ
-`vector_store.similarity_search_with_score()` - giống 100% cách so sánh cũ, không đi
-qua bất kỳ hàm chuẩn hoá relevance-score nào của LangChain. Vẫn giữ được API
-`retriever.invoke(query)` như yêu cầu kiến trúc trước đó, chỉ khác cách tính điểm
-bên trong.
-
-Giá trị TOP_K và SCORE_THRESHOLD GIỮ NGUYÊN 100% so với trước khi refactor.
+Khởi tạo và cấu hình LangChain Retriever cho luồng RAG:
+1. Kiến trúc: Đóng gói VectorStore thành Retriever chuẩn, cung cấp phương thức `invoke(query)` cho rag.py.
+2. Xử lý triệt để bug Score Threshold:
+   - Thay thế `similarity_score_threshold` mặc định của LangChain (tự động scale điểm qua `(raw + 1) / 2` làm lọt chunk rác/none-source).
+   - Triển khai `_ThresholdRetriever` để so khớp trực tiếp trên thang RAW SCORE gốc (`score >= SCORE_THRESHOLD`).
+3. Tham số: Bảo toàn tuyệt đối các cấu hình gốc (`TOP_K`, `SCORE_THRESHOLD = 0.4`).
 """
 from __future__ import annotations
 
@@ -42,32 +18,20 @@ from langchain_core.vectorstores import VectorStore
 from .vector_store import get_vector_store
 
 TOP_K = 5
-# Điểm similarity tối thiểu để 1 chunk được coi là "liên quan". Chunk có
-# điểm thấp hơn ngưỡng này sẽ bị loại để tránh nhồi context không liên quan
-# vào prompt (giảm nguy cơ model trả lời sai / bịa). Giá trị không đổi so
-# với bản Qdrant thuần trước đây - đây LÀ NGƯỠNG CHO RAW SCORE của Qdrant.
+# Ngưỡng Raw Cosine Score tối thiểu để giữ lại chunk; lọc bỏ context không liên quan nhằm hạn chế hallucination.
 SCORE_THRESHOLD = 0.4
 
-
 class _ThresholdRetriever(BaseRetriever):
-    """Retriever lọc theo NGƯỠNG ĐIỂM SỐ THÔ (raw similarity score do chính
-    Qdrant trả về qua `similarity_search_with_score()`), KHÔNG đi qua hàm
-    chuẩn hoá relevance-score nội bộ của LangChain (xem giải thích ở đầu
-    file). Nhờ vậy SCORE_THRESHOLD giữ nguyên đúng ý nghĩa như bản Qdrant
-    thuần trước khi refactor."""
-
+    """Retriever lọc theo RAW SCORE trực tiếp từ `similarity_search_with_score()`, 
+    bỏ qua hàm chuẩn hóa relevance score mặc định của LangChain để giữ đúng ý nghĩa SCORE_THRESHOLD."""
     vector_store: VectorStore
     k: int = TOP_K
     score_threshold: float = SCORE_THRESHOLD
 
     def _get_relevant_documents(self, query: str, *, run_manager: Any = None) -> list[Document]:
-        # Truyền score_threshold thẳng cho Qdrant lọc ở phía server (native
-        # param của similarity_search_with_score) - tương đương kết quả với
-        # cách lọc client-side cũ (`r.score >= SCORE_THRESHOLD`), chỉ hiệu
-        # quả hơn vì Qdrant không cần trả về những điểm chắc chắn bị loại.
-        results = self.vector_store.similarity_search_with_score(
-            query, k=self.k,
-        )
+        # Lọc ngưỡng trực tiếp phía server qua param native của similarity_search_with_score; 
+        # tối ưu hiệu năng bằng cách giảm payload truyền tải.
+        results = self.vector_store.similarity_search_with_score(query, k=self.k)
         docs = []
 
         for doc, score in results:
@@ -77,14 +41,9 @@ class _ThresholdRetriever(BaseRetriever):
         return docs
     #    return [doc for doc, _score in results]
 
-
 @lru_cache(maxsize=8)
 def get_retriever(top_k: int = TOP_K, score_threshold: float = SCORE_THRESHOLD) -> BaseRetriever:
-    """Trả về 1 Retriever sẵn sàng dùng qua `.invoke(query)`.
-
-    Cache theo (top_k, score_threshold) vì trong project hiện chỉ dùng đúng
-    1 bộ tham số mặc định ở mọi nơi gọi - tránh tạo lại object retriever ở
-    mỗi lượt hỏi mà không có lý do."""
-    return _ThresholdRetriever(
-        vector_store=get_vector_store(), k=top_k, score_threshold=score_threshold,
-    )
+    """Trả về instance Retriever tương thích chuẩn `.invoke(query)`.
+    Cache theo cặp tham số `(top_k, score_threshold)` để tái sử dụng object, tránh overhead khởi tạo lại qua từng request.
+    """
+    return _ThresholdRetriever(vector_store=get_vector_store(), k=top_k, score_threshold=score_threshold)

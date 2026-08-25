@@ -1,42 +1,5 @@
-"""
-voice/microphone.py
-Microphone: thiết bị thu âm -> numpy.ndarray. Đây là bước ĐẦU TIÊN trong
-pipeline Voice Chat, đứng TRƯỚC stt.py:
-
-    [microphone.py] -> Audio (np.ndarray) -> stt.py -> text_normalizer.py
-        -> chatbot.ask() -> tts.py -> speaker.py
-
-File này CHỈ có đúng 1 trách nhiệm: thu âm trong N giây, trả về waveform
-dạng numpy array. Không làm gì khác:
-- Không lưu file (không ghi .wav ra đĩa).
-- Không gọi faster-whisper / STT - đó là việc của stt.py, đứng ở lớp
-  ngoài microphone.py, microphone.py không import stt.
-- Không normalize text - microphone.py còn chưa hề có "text", chỉ có
-  audio thô.
-- Không biết gì về chatbot/RAG/Memory/Tool Calling/LLM/TTS/Speaker -
-  không import bất kỳ module nào trong số đó.
-- Không hardcode nghiệp vụ (không có logic menu/promotions/business gì ở
-  đây, đây thuần túy là I/O phần cứng).
-
-THƯ VIỆN: `sounddevice` (bọc PortAudio). Chọn vì:
-- API đơn giản nhất cho use-case "thu âm N giây, trả numpy array":
-  `sd.rec(...)` trả thẳng `np.ndarray`, không cần tự quản lý callback,
-  buffer, hay stream thủ công như khi dùng `pyaudio`.
-- Không cần ghi file trung gian (khác nhiều ví dụ dùng `wave` module) -
-  khớp đúng yêu cầu "không lưu file" của phase này.
-- Cùng hệ sinh thái numpy mà stt.py (Phase STT) đã dùng, nên
-  `Microphone.record()` trả ra đúng kiểu `np.ndarray` mà
-  `SpeechToText.transcribe()` cần, không cần lớp chuyển đổi ở giữa.
-
-VỀ THIẾT BỊ GHI ÂM: `VoiceConfig.device` là compute device cho model
-Whisper ("cpu"/"cuda" - xem stt.py), KHÔNG PHẢI audio input device vật
-lý (microphone nào trên máy). Hai khái niệm "device" này khác nhau hoàn
-toàn dù trùng tên field. Vì vậy microphone.py KHÔNG dùng
-`config.device` - `sounddevice` sẽ dùng microphone MẶC ĐỊNH của hệ điều
-hành. Nếu sau này cần chọn 1 microphone cụ thể (nhiều micro cùng lúc),
-cần thêm field mới vào VoiceConfig - xem đề xuất ở cuối câu trả lời,
-KHÔNG tái sử dụng `config.device` cho việc này.
-"""
+"""Module I/O thu âm phần cứng thuần túy qua `sounddevice`: Ghi âm in-memory và trả về `np.ndarray` trực tiếp cho `stt.py`,
+ không lưu file tạm và độc lập hoàn toàn với tầng xử lý nghiệp vụ/LLM."""
 from __future__ import annotations
 
 import logging
@@ -50,7 +13,6 @@ logger = logging.getLogger(__name__)
 
 _CHANNELS = 1
 _DTYPE = "float32"
-
 
 class Microphone:
     """Bọc `sounddevice`, chỉ expose đúng 1 hành vi: thu âm N giây ->
@@ -163,3 +125,46 @@ class Microphone:
             )
         if duration <= 0:
             raise ValueError(f"duration phải > 0, hiện tại: {duration}")
+
+    def record_on_enter(self) -> np.ndarray:
+        """Ghi âm không cố định thời lượng bằng InputStream callback và dừng khi người dùng nhấn Enter,
+          trả về mảng 1D float32 cho STT."""
+        frames: list[np.ndarray] = []
+
+        def _callback(indata: np.ndarray, frame_count: int, time_info, status) -> None:
+            # Callback chạy trên AUDIO THREAD riêng của PortAudio, không
+            # phải main thread - CHỈ append vào list (thao tác nhanh,
+            # không block), không làm gì tốn thời gian ở đây để tránh
+            # tràn buffer audio (underrun) nếu callback xử lý quá chậm.
+            frames.append(indata.copy())
+
+        logger.info("Bắt đầu ghi âm (nhấn Enter để dừng)...")
+        try:
+            stream = sd.InputStream(
+                samplerate=self._sample_rate,
+                channels=_CHANNELS,
+                dtype=_DTYPE,
+                callback=_callback,
+            )
+            with stream:
+                # input() chặn MAIN THREAD tới khi người dùng nhấn Enter -
+                # trong lúc đó, audio thread (callback ở trên) vẫn tiếp
+                # tục chạy nền, gom frame vào `frames`. Không cần vòng lặp
+                # sleep/polling thời lượng - đây chính là cách tránh giới
+                # hạn cố định 5 giây của thiết kế cũ.
+                input()
+        except Exception as exc:
+            logger.exception("Lỗi khi ghi âm từ microphone (chế độ Enter)")
+            raise RuntimeError("Không thể ghi âm từ microphone") from exc
+
+        if not frames:
+            logger.info("Ghi âm xong: 0 mẫu (dừng ngay lập tức, chưa thu được gì)")
+            return np.array([], dtype=np.float32)
+
+        waveform = np.concatenate(frames, axis=0).reshape(-1).astype(np.float32)
+        logger.info(
+            "Ghi âm xong: %d mẫu (%.2fs)",
+            waveform.shape[0],
+            waveform.shape[0] / self._sample_rate,
+        )
+        return waveform

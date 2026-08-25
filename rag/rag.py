@@ -1,12 +1,9 @@
 """
-rag.py
-Module truy vấn (retrieval) - dùng LangChain Retriever (retriever.py) thay
-vì gọi thẳng QdrantClient như trước. Trả về context liên quan nhất tới câu
-hỏi của user.
-
-Interface công khai (retrieve(), retrieve_context()) GIỮ NGUYÊN 100% so với
-trước khi refactor - chatbot.py và evaluate.py không cần sửa gì.
+Module truy vấn RAG.
+Public API giữ nguyên: retrieve(), retrieve_context()
+Pipeline bên dưới: Dense + BM25 -> RRF Fusion -> Cross-Encoder Reranker -> Top-K
 """
+
 from __future__ import annotations
 
 from langchain_core.documents import Document
@@ -14,46 +11,26 @@ from langchain_core.documents import Document
 from .hybrid_retriever import get_hybrid_retriever
 from .retriever import SCORE_THRESHOLD, TOP_K
 
-# Re-export để code cũ (nếu có) đang `from rag import SCORE_THRESHOLD/TOP_K`
-# vẫn import được - dù giá trị thật giờ được định nghĩa ở retriever.py.
-__all__ = ["retrieve", "retrieve_context", "TOP_K", "SCORE_THRESHOLD"]
-
+__all__ = [
+    "retrieve",
+    "retrieve_context",
+    "TOP_K",
+    "SCORE_THRESHOLD",
+]
 
 def retrieve(query: str, top_k: int = TOP_K) -> dict:
-    """Truy vấn qua LangChain Retriever (retriever.invoke) và trả về CẢ
-    context đã format lẫn kết quả thô.
-
-    Trả về:
-        {
-            "context": str,        # các chunk đã qua score_threshold, ghép thành 1 chuỗi
-            "results": list[Document],  # danh sách Document đã lọc (mỗi Document có
-                                         # .page_content và .metadata) - dùng để đo
-                                         # retrieval metadata (vd. trong evaluate.py)
-        }
-
-    LƯU Ý: từ khi chuyển sang HybridRetriever (Dense + Sparse BM25 + RRF
-    Fusion, xem hybrid_retriever.py), việc lọc theo ngưỡng KHÔNG còn dùng
-    search_type="similarity_score_threshold" cố định 1 mức duy nhất nữa -
-    ngưỡng dense giờ ĐIỀU KIỆN theo việc BM25 có tìm được từ khóa khớp hay
-    không (xem giải thích chi tiết trong hybrid_retriever.py). "results" ở
-    đây vẫn chỉ gồm các chunk ĐÃ qua fusion + lọc, không phải toàn bộ top_k
-    thô - hành vi bên ngoài (shape của dict trả về) không đổi so với trước.
-    """
-    documents: list[Document] = get_hybrid_retriever(top_k=top_k).invoke(query)
+    """Retrieve context và trả cả documents thô sau reranking."""
+    documents: list[Document] = (get_hybrid_retriever(top_k=top_k).invoke(query))
     context = "\n".join(f"- {doc.page_content}" for doc in documents)
     return {"context": context, "results": documents}
 
-
 def retrieve_context(query: str, top_k: int = TOP_K) -> str:
-    """Giữ nguyên interface cũ để chatbot.py (và mọi code khác) không cần
-    sửa gì - chỉ là lớp mỏng gọi lại retrieve()."""
+    """Backward-compatible API cho chatbot.py."""
     return retrieve(query, top_k)["context"]
 
-
 if __name__ == "__main__":
-    # Test nhanh: python rag.py "câu hỏi test"
     import sys
-    q = " ".join(sys.argv[1:]) or "Quán có món cà phê muối không, giá bao nhiêu?"
-    print(f"Query: {q}\n")
-    ctx = retrieve_context(q)
-    print("Context tìm được:\n" + (ctx or "(không có gì đủ liên quan)"))
+    query = (" ".join(sys.argv[1:]) or "Quán có món cà phê muối không, giá bao nhiêu?")
+    print(f"Query: {query}\n")
+    context = retrieve_context(query)
+    print("Context tìm được:\n" + (context or "(không có gì đủ liên quan)"))
